@@ -15,13 +15,11 @@ body { font-family: sans-serif; }
     padding-bottom: 3px;
     margin-right: 10px;
     background-color: rgb(258, 258, 258);
-    border: 1px solid rgb(238, 237, 237);
-    border-radius: 20px;
+    border-radius: 0px;
     counter-increment: carousel-cell;
     cursor: pointer;
 }
 .carousel-cell:hover{
-    border: 1px solid rgb(238, 237, 237);
     color: #FA8900;;
 }
 .carousel-cell.is-selected{
@@ -36,13 +34,13 @@ body { font-family: sans-serif; }
     display: none;
 }
 .flickity-button{
-    background-color: #FA8900;
-    color: white;
+    background-color: #dcdcdc;
+    color: rgb(255, 255, 255);
     width: 30px;
     height: 30px;
     opacity: .3;
 }
 .flickity-button:hover{
   opacity: 1;
-  background-color: #e07b00;
+  background-color: #a4a4a4;
 }

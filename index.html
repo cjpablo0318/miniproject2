@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,10 +11,8 @@
     <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css"> <!--Flickity-->
     <link rel="stylesheet" href="./css/style.css">
     <link rel="stylesheet" href="./css/flickity.css">
-
 </head>
 <body>
-
     <!-- Nav bar -->
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container">
@@ -33,12 +30,12 @@
                         </a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link position-relative" href="#">
+                        <a class="nav-link position-relative" href="./mycart.html">
                             <button type="button" class="position-relative bg-transparent" style="border:none">
                                 <i class="fa-solid fa-cart-shopping"></i>
-                                <span id="cart" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                                <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
                             </button>
-                            <span class="badge text-dark">$100</span>
+                            <span class="badge text-dark" id="cart-value">$100</span>
                         </a>
                       </li>
                       <li class="nav-item">
@@ -55,44 +52,90 @@
             </ul>
           </div>
         </div>
-      </nav>
+    </nav>
 
-    <section class="categories">
-        <div class="container">
-            <div id = "categoryLists" class="row category-container">
-                <ul class="category-body">
-                    <div class="carousel" data-flickity='{ "wrapAround": true }'>
-                        <div class="carousel-cell">Clothes</div>
-                        <div class="carousel-cell">Clothes</div>
-                        <div class="carousel-cell">Clothes</div>
-                        <div class="carousel-cell">Clothes</div>
-                        <div class="carousel-cell">Clothes</div>
-                        <div class="carousel-cell">Clothessfsdfsf</div>
-                        <div class="carousel-cell">Clothes</div>
-                        <div class="carousel-cell">Closdthes</div>
-                        <div class="carousel-cell">Clotsdfhes</div>
-                        <div class="carousel-cell">Clothes</div>
-                        <div class="carousel-cell">Clotsdhes</div>
-                        <div class="carousel-cell">Clotsdfhes</div>
-                        <div class="carousel-cell">Clotsdfshes</div>
-                        <div class="carousel-cell">Clothessff</div>
-                        <div class="carousel-cell">Clothasdes</div>
-                        <div class="carousel-cell">Clotashes</div>
-                        <div class="carousel-cell">Clotasdhes</div>
-                        <div class="carousel-cell">Clotasdhes</div>
-                        <div class="carousel-cell">Clotasdhes</div>
-                        <div class="carousel-cell">Clotdasdhes</div>
-                        <div class="carousel-cell">Clotasashes</div>
-                        <div class="carousel-cell">Clothes</div>
-                    </div>
-                </ul>
-            </div>
-            <div id = "productLists" class="row">
-                
+    <section class="video mt-2">
+        <div class="container-fluid">
+            <video  autoplay muted loop>
+                <source src="./video/ennea_AdobeExpress.webm" type="video/mp4">
+            </video>
+            <div class="row">
+                <div class="col">
+                    
+                </div>
             </div>
         </div>
     </section>
-    <div id="todaysDeals"></div>
+
+    <section class="content mt-4">
+        <div class="container">
+            <div class="row mt-3">
+                <h5><strong>Shop by category</strong></h5>
+                <div class="row" id="categories">
+                   
+                </div>
+            </div>
+
+            <div class="row mt-5 mb-5 best-offer-container">
+                <div class="row ms-1 ps-1 my-1"><h6><strong>Best offer</strong></h1></div>
+                <div class="row">
+                    <div class="col-3">
+                        <img src="./img/—Pngtree—white t-shirt_2005822.png" alt="" class="img-fluid" id="best-img">
+                    </div>
+                    <div class="col">
+                        <div class="row">
+                            <h4 class="" id="best-title">Title of the products</h5>
+                        </div>
+                        <div class="row product-specific-quantity">
+                            <div class="col-6 d-flex align-items-center product-specific-quantity">
+                                <button><i class="fa-solid fa-minus"></i></button>
+                                <button style="border: none; color: rgb(46, 46, 46); cursor: default; font-size: 16px; background-color: transparent" class="product-specific-value">1</button>
+                                <button><i class="fa-solid fa-plus"></i></i></button>
+                            </div>
+                            <div class="col">
+                                <span class="product-specific-label">Price</span>
+                                <div class="row mt-1">
+                                    <div class="col">
+                                        <span style="font-size: 25px;" id="best-price">₱ 500</span> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <h6 class="product-specific-label">Sizes</h6>
+                            <div class="d-flex product-specific-variant product-specific-variant-sizes">
+                                <button>White</button>
+                                <button>red</button>
+                                <button>black</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4 order-details">
+                                <a href="" id="best-link"><button class="pt-2 pb-2 add-to-cart mt-3 mb-3 w-100">Add to cart</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row promotion-container mt-4 mb-4">
+                <div class="col-3 d-none">
+                    <img src="./img/—Pngtree—white t-shirt_2005822.png" alt="">
+                </div>
+                <div class="col item-center">
+                    <h1>Sale up to </h1>
+                    <h1 style="margin-left: 10px"> <strong> 30% off</strong></h1>
+                    <button>shop now</button>
+                </div>
+            </div>
+            <div class="row mt-4 mb-4">
+                <h5><strong>Featured</strong></h5>
+                <div class="row" id="todaysDeal">
+                    
+                </div>
+            </div>
+        </div>
+    </section>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
