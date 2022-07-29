@@ -56,40 +56,39 @@ productsPlaceHolder = (number) =>{
 }
 
 //get the product container filled with data from the api
-getProduct = (...details) =>{
-    const isValid = (name) => /^\d/.test(name);
-
-    if(isValid(details[1])){
-        return "";
-    }
-
+getProduct = (details) =>{
     let product = ''+
         '<div class="col-xl-3 col-lg-4 col-md-4 g-2">'+
             '<div class="product-container">'+
                 '<div class="">'+
                     '<div class="row">'+
-                        '<div class="product-btns px-3 py-1">'+
-                            '<div class="product-btn-item item-center float-start" onclick="addToCart('+details[3]+',1)">'+
-                                '<i class="fa-solid fa-cart-plus"></i>'+
-                            '</div>'+
+                        '<div class="product-btns px-4 py-2 ">'+
+                            '<div class="product-btn-item item-center float-start" onclick="addToCart('+details.item_id+',1, this)">';
+                                if(checkCart(details.item_id)){
+                                    product += '<i class="fa-solid fa-circle-check" style="color: green"></i>';
+                                }else{
+                                    product += '<i class="fa-solid fa-cart-plus"></i>';
+                                }
+                                
+    product +=              '</div>'+
                             '<div class="product-btn-item item-center float-end ">'+
                                 '<i class="fa-solid fa-heart"></i>'+
                             '</div>'+
                         '</div>'+
-                        '<a href="./productDetails.html?id=' + details[3] + '" style="text-decoration: none; color: black">' +
+                        '<a href="./productDetails.html?id=' + details.item_id + '" style="text-decoration: none; color: black">' +
                         '<div class="item-center">'+
-                            '<img src="' + details[0] + '" alt="" class="product-img">'+
+                            '<img src="' + details.img_url + '" alt="" class="product-img">'+
                         '</div>'+
                     '</div>'+
                     '<div class="row product-details">'+
-                        '<p class="product-name">' + details[1] + '</p>'+ 
+                        '<p class="product-name">' + details.main_title + '</p>'+ 
                         '<p class="product-label-light">Price</p>'+
                         '<p class="product-price">'+
-                            '<span class="product-price-now"> ' + getTotalPrice(parseInt(details[2])) + '</span> '+
+                            '<span class="product-price-now"> ' + getTotalPrice(parseInt(details.price)) + '</span> '+
                         '</p> '+
                     '</div>'+
                     '<div class="row product-details d-none">'+
-                        '<a href="./productDetails.html?id=' + details[3] + '" class="btn-0 text-center p-1">Shop Now</button></a>'+
+                        '<a href="./productDetails.html?id=' + details.item_id + '" class="btn-0 text-center p-1">Shop Now</button></a>'+
                     '</div>'+
                 '</div></a>'+
             '</div>'+
@@ -99,16 +98,15 @@ return product;
 //display the data of the specific product
 getProductDetails = (details) =>{
     document.querySelector('.product-specific_img').src = details.img_url;
-    document.querySelector('.product-specific-brand').innerHTML = details.specifications.Brand;
+    document.querySelector('.product-specific-brand').innerHTML = details.category;
     document.querySelector('.product-specific-title').innerHTML = details.main_title;
     
     let quantity = document.querySelector('.product-specific-value');
     let price = document.querySelector('.product-specific-price');
     let counter = 1;
-    let phpValue = 50;
     let finalPrice = 0;
 
-    finalPrice = parseInt(details.price.value) * counter;
+    finalPrice = parseInt(details.price) * counter;
     price.innerHTML = getTotalPrice(finalPrice);
 
     document.querySelector('.fa-minus').onclick = function(){
@@ -118,14 +116,14 @@ getProductDetails = (details) =>{
         }
         quantity.innerHTML = counter;
 
-        finalPrice = parseInt(details.price.value) * counter;
+        finalPrice = parseInt(details.price) * counter;
         price.innerHTML = getTotalPrice(finalPrice);
     }
     document.querySelector('.fa-plus').onclick = function(){
         counter++;
         quantity.innerHTML = counter;
 
-        finalPrice = parseInt(details.price.value) * counter;
+        finalPrice = parseInt(details.price) * counter;
         price.innerHTML = getTotalPrice(finalPrice);
     }
 
@@ -158,12 +156,24 @@ getProductDetails = (details) =>{
     //sizes.innerHTML = result;
 
     //refund policy
-    document.querySelector('.product-specific-refund-policy').innerHTML = details.returns;
+    //document.querySelector('.product-specific-refund-policy').innerHTML = details.returns;
 
     //shipping
-    document.querySelector('.product-specific-inventory').innerHTML = details.inventory_location[0].address.city;
-    document.querySelector('.product-specific-shipping').innerHTML = details.shipping.logistics.domestic_or_international == null ? "Not Available" : details.shipping.logistics.domestic_or_international;
+    //document.querySelector('.product-specific-inventory').innerHTML = details.inventory_location[0].address.city;
+    //document.querySelector('.product-specific-shipping').innerHTML = details.shipping.logistics.//domestic_or_international == null ? "Not Available" : details.shipping.logistics.domestic_or_international;
 
+    let addCart = document.querySelector('.add-to-cart');
+
+    if(checkCart(details.item_id)){
+        addCart.innerHTML = "View cart";
+    }else{
+        addCart.innerHTML = "Add to cart";
+    }
+
+    addCart.onclick = function(){
+        addCart.innerHTML = "View cart"; 
+        addToCart(details.item_id, counter);
+    }
     return;
     //more product info
     let productKeys = Object.keys(details.specifications);
@@ -186,7 +196,7 @@ getProductDetails = (details) =>{
 }
 
 getTotalPrice = (price) =>{
-    return "₱" + Math.floor((price * 50));
+    return "₱ " + price.toLocaleString('en-PH');
 }
 //getting the category list
 getCategories = () =>{
@@ -218,10 +228,9 @@ getBestOffer = (details) =>{
 
     let quantity = document.querySelector('.product-specific-value');
     let counter = 1;
-    let phpValue = 50;
     let finalPrice = 0;
 
-    finalPrice = parseInt(details.price.value) * counter;
+    finalPrice = parseInt(details.price) * counter;
     bestPrice.innerHTML = getTotalPrice(finalPrice);
 
     document.querySelector('.fa-minus').onclick = function(){
@@ -231,14 +240,14 @@ getBestOffer = (details) =>{
         }
         quantity.innerHTML = counter;
 
-        finalPrice = parseInt(details.price.value) * counter;
+        finalPrice = parseInt(details.price) * counter;
         bestPrice.innerHTML = getTotalPrice(finalPrice);
     }
     document.querySelector('.fa-plus').onclick = function(){
         counter++;
         quantity.innerHTML = counter;
 
-        finalPrice = parseInt(details.price.value) * counter;
+        finalPrice = parseInt(details.price) * counter;
         bestPrice.innerHTML = getTotalPrice(finalPrice);
     }
 
@@ -256,37 +265,6 @@ getBestOffer = (details) =>{
     }
 
     //bestLink.href = "productDetails.html?id=" + details.item_id;
-}
-
-let productInfo = "";
-sizeChange = () => {
-    //console.log('here');
-    let getBrowserWidth = function(){
-        if(window.innerWidth < 768){
-            // Extra Small Device
-            return "xs";
-        } else if(window.innerWidth < 991){
-            // Small Device
-            return "sm"
-        } else if(window.innerWidth < 1199){
-            // Medium Device
-            return "md"
-        } else {
-            // Large Device
-            return "lg"
-        }
-    };
-
-    if(productInfo == ""){
-
-    }
-
-    if(getBrowserWidth() == 'xs'){
-        document.querySelector('.product-specific-more-info-lg').innerHTML = document.querySelector('.product-specific-more-info').innerHTML;
-        document.querySelector('.product-specific-more-info').innerHTML = "";
-    }else{
-        
-    }
 }
 
 //saving data to the local storage
@@ -462,7 +440,7 @@ loggedInUserID = () =>{
 loadCart = () =>{
     let cartListFromLocal = loadFromLocal('cart');
     let cartBadge = document.getElementById('cart-badge');
-    let cartValue = document.getElementById('cart-value');
+    let cartValue = document.querySelectorAll('.cart-value');
 
     if(cartListFromLocal != ''){
         cartBadge.style.display = 'block';
@@ -475,13 +453,36 @@ loadCart = () =>{
     for(let i = 0; i < cartListFromLocal.length; i++){
         finalPrice += parseInt(cartListFromLocal[i].price * cartListFromLocal[i].quantity);
     }
-    cartValue.innerHTML = getTotalPrice(finalPrice);
+   
+    cartValue.forEach(element => {
+        element.innerHTML = getTotalPrice(finalPrice);
+    });
+
+    //load cart
+    let cart = document.getElementById('cart-list');
+    if(cart != null){
+        cartList();
+    }
+
+    let checkoutBtn = document.querySelector('.checkout');
+    if(checkoutBtn != null){
+        if(cartListFromLocal != ''){
+            checkoutBtn.style.backgroundColor = "green";
+            checkoutBtn.removeAttribute('disabled');
+        }else{
+            checkoutBtn.style.backgroundColor = "gray";
+        }
+    }
 }
-addToCart = (id, quantity) => {
+addToCart = (id, quantity, element = null) => {
     let cartListFromLocal = loadFromLocal('cart') || [];
     if(loggedInUserID() != ''){
         //save to database
     }
+
+   if(element != null){
+        element.innerHTML = '<i class="fa-solid fa-circle-check" style="color: green"></i>';
+   }
 
     if(checkCart(id)){
         location.replace("./mycart.html");
@@ -492,7 +493,7 @@ addToCart = (id, quantity) => {
         for(let i = 0; i < cartListFromLocal.length; i++){
             cartListFromLocal[i] = {
                 id : cartListFromLocal[i].id,
-                quantity: quantity
+                quantity: cartListFromLocal[i].quantity
             };
         }
     }
@@ -501,28 +502,18 @@ addToCart = (id, quantity) => {
         id : id,
         quantity: quantity
     }
-    console.log(cartListFromLocal);
 
-    let featuredProducts = loadFromLocal('featuredProducts');
-    let featuredDaily = loadFromLocal('featuredDaily');
+    let featuredProducts = loadFromLocal('products');
 
     for(let i = 0; i < cartListFromLocal.length; i++){
-        for(let j = 0; j < featuredDaily.results.length; j++){
-            if(cartListFromLocal[i].id == featuredDaily.results[j].item_id){
-                cartListFromLocal[i]['url'] = featuredDaily.results[j].images.url;
-                cartListFromLocal[i]['title'] = featuredDaily.results[j].title;
-                cartListFromLocal[i]['price'] = parseInt(featuredProducts.results[j].display_price.value);
-            }
-        }
-        for(let j = 0; j < featuredProducts.results.length; j++){
-            if(cartListFromLocal[i].id == featuredProducts.results[j].item_id){
-                cartListFromLocal[i]['url'] = featuredProducts.results[j].images.url;
-                cartListFromLocal[i]['title'] = featuredProducts.results[j].title;
-                cartListFromLocal[i]['price'] = parseInt(featuredProducts.results[j].display_price.value);
+        for(let j = 0; j < featuredProducts.data.length; j++){
+            if(cartListFromLocal[i].id == featuredProducts.data[j].item_id){
+                cartListFromLocal[i]['url'] = featuredProducts.data[j].img_url;
+                cartListFromLocal[i]['title'] = featuredProducts.data[j].main_title;
+                cartListFromLocal[i]['price'] = parseInt(featuredProducts.data[j].price);
             }
         }
     }
-    console.log(cartListFromLocal);
     //save item to cart
     saveToLocal('cart', cartListFromLocal);
     loadCart();
@@ -545,18 +536,20 @@ cartList = () =>{
         return;
     }
 
+    cart.innerHTML = "";
+
     if(cartListFromLocal == ''){
         cart.innerHTML = '<p class="lead p-5 text-center">Add some product</p>';
     }
 
     for(let i = 0; i < cartListFromLocal.length; i++){
-        cart.innerHTML += '<div class="row my-cart">' +
+        cart.innerHTML += '<div class="row my-cart" >' +
         '<div class="col-md-6 d-flex">' +
             '<div class="row">' +
                 '<img src="'+ cartListFromLocal[i].url + '" alt="">' +
                 '<div class="col mt-1">' +
-                    '<p class="product-name" style="font-size: 16px;"><a href="">' + cartListFromLocal[i].title + '</a></p>' +
                     '<div class="row">' +
+                    '<p class="product-name" style="font-size: 16px;"><a href="">' + cartListFromLocal[i].title + '</a></p>' +
                         '<div class="col">' +
                             '<div class="col-6 d-flex align-items-center product-specific-quantity">' +
                                 '<span style="display: none">' + i + '</span>' + 
@@ -589,7 +582,17 @@ cartList = () =>{
         '</div>' +
     '</div>'; 
     }
+    
+    let countCart = document.querySelector('.product-specific-brand');
+    if(countCart != null){
+        countCart.innerHTML = cartListFromLocal.length;
+    }
     quantityEditor();
+
+    document.querySelector('.btn-delete-all').onclick = function(){
+        saveToLocal('cart', '');
+        location.replace("./mycart.html");
+    }
 }
 
 quantityEditor = () =>{
@@ -611,6 +614,7 @@ quantityEditor = () =>{
             cartListFromLocal[index].quantity = quantityValue;
             price[index].innerHTML = getTotalPrice(parseInt(cartListFromLocal[index].price * cartListFromLocal[index].quantity));
             saveToLocal('cart', cartListFromLocal);
+            loadCart();
         }
     });
     document.querySelectorAll(".plus").forEach(button => {
@@ -627,6 +631,7 @@ quantityEditor = () =>{
             cartListFromLocal[index].quantity = quantityValue;
             price[index].innerHTML = getTotalPrice(parseInt(cartListFromLocal[index].price * cartListFromLocal[index].quantity));
             saveToLocal('cart', cartListFromLocal);
+            loadCart();
         }
     });
 
@@ -635,47 +640,55 @@ quantityEditor = () =>{
             let cartListFromLocal = loadFromLocal('cart') || [];
             let index = this.parentElement.children[0].innerText;
 
-            console.log(cartListFromLocal);
-            cartListFromLocal.splice(index, 1);
-            console.log(cartListFromLocal);
+            let newList = [];
+            let newIndex = 0;
+            for(let i = 0; i < cartListFromLocal.length; i++){
+                if(i != index){
+                    newList[newIndex] = cartListFromLocal[i];
+                    newIndex++;
+                }
+            }
+            saveToLocal('cart', newList);
+
+            if(cartListFromLocal.length == 1){
+                location.replace("./mycart.html");
+                return;
+            }
+
+            loadCart();
+            cartList();
+
+           
         }
     });
 }
-
-localApiResponce = () =>{
-}
-localApiCall = () =>{
-}
-
 //waiting for data
 apiResponse = async (url, method = "GET", ...values) =>{
     let options = {};
 
-     switch(method){
-         case 'GET': {
-             options = {
-                 method: 'GET',
-                 headers: {
-                     'X-RapidAPI-Key': 'abb1494fe4msh22d35c579ba0b72p1eba2ajsn5dd3bf5cdfbc',
-                     'X-RapidAPI-Host': 'ebay-scraper.p.rapidapi.com'
-                 }
-             };
-             break;
-         }
-         case 'POST' :{
-             options = {
-                 method: 'POST',
-                 headers: {
-                     'content-type': 'application/json',
-                     'X-RapidAPI-Key': 'abb1494fe4msh22d35c579ba0b72p1eba2ajsn5dd3bf5cdfbc',
-                     'X-RapidAPI-Host': 'ebay-scraper.p.rapidapi.com'
-                 },
-                 body: '{"product_id":'+ values[0] +'}'
-             };
-         }
-     }
-    
-    
+    //  switch(method){
+    //      case 'GET': {
+    //          options = {
+    //              method: 'GET',
+    //              headers: {
+    //                  'X-RapidAPI-Key': 'abb1494fe4msh22d35c579ba0b72p1eba2ajsn5dd3bf5cdfbc',
+    //                  'X-RapidAPI-Host': 'ebay-scraper.p.rapidapi.com'
+    //              }
+    //          };
+    //          break;
+    //      }
+    //      case 'POST' :{
+    //          options = {
+    //              method: 'POST',
+    //              headers: {
+    //                  'content-type': 'application/json',
+    //                  'X-RapidAPI-Key': 'abb1494fe4msh22d35c579ba0b72p1eba2ajsn5dd3bf5cdfbc',
+    //                  'X-RapidAPI-Host': 'ebay-scraper.p.rapidapi.com'
+    //              },
+    //              body: '{"product_id":'+ values[0] +'}'
+    //          };
+    //      }
+    //  }
 
     const response = options != null ? await fetch(url, options) : await fetch(url);
     const result = await response.json();
@@ -685,100 +698,58 @@ apiResponse = async (url, method = "GET", ...values) =>{
 //call each api
 apiCall = async () =>{
     const today = new Date().getMonth() + 1 + "" + new Date().getDate() + "" + new Date().getFullYear();
-    let featuredProducts = null;
-    let featuredDaily = null;
-
+    let featuredProducts = loadFromLocal('products');
+    //localStorage.clear();
     //load cart first
     loadCart();
+
     //cart.html
     cartList();
 
-    //set placeholders
-    if(todaysDeal != null){
-        todaysDeal.innerHTML = productsPlaceHolder(5);
-    }
-
-
-    if(today != loadFromLocal('today')){
-        featuredProducts = await apiResponse("https://ebay-scraper.p.rapidapi.com/featured");
-        featuredDaily = await apiResponse("https://ebay-scraper.p.rapidapi.com/featured-deals?type=daily");
-        
-        //clear the local storage first
-        //but don't clear the user data
-
-        //saving to local storage
-        saveToLocal('today', today);
-        saveToLocal('featuredProducts', featuredProducts);
-        saveToLocal('featuredDaily', featuredDaily);
-        saveToLocal('bestOffer', '');
-        saveToLocal('cart', '');
-        console.log('Daily update');
-    }else{
-        featuredProducts = loadFromLocal('featuredProducts');
-        featuredDaily = loadFromLocal('featuredDaily');
-        console.log('from local storage');
-
-        //if featured products anf/or featured daily is empty then call api
-        if(featuredProducts == null || featuredDaily == ""){
-            featuredProducts = await apiResponse("https://ebay-scraper.p.rapidapi.com/featured"); //all product
-            featuredDaily = await apiResponse("https://ebay-scraper.p.rapidapi.com/featured-deals?type=daily"); //specific product
-        
-            //saving to local storage
-            saveToLocal('today', today);
-            saveToLocal('featuredProducts', featuredProducts);
-            saveToLocal('featuredDaily', featuredDaily);
-            console.log('Update products');
-        }
-    }
-
-    //const productDetails = await apiResponse("https://ebay-scraper.p.rapidapi.com/product-details", 'POST', '294951491676');
-    //saveToLocal('294951491676', productDetails);
-
-    console.log(featuredProducts);
-    console.log(featuredDaily);
-
-    //const currentLogIn = await apiResponse('./php/ennea.api.php?email=fsdfsdf&password=asdasd');
+     //set placeholders
+     if(todaysDeal != null){
+         todaysDeal.innerHTML = productsPlaceHolder(5);
+     }
+    //const currentLogIn = await apiResponse('./php/ennea.api.php?email=email&password=dadas');
     //console.log(currentLogIn);
+
+    if(featuredProducts == ''){
+        featuredProducts = await apiResponse('./php/ennea.api.php?products=1');
+        saveToLocal('products', featuredProducts);
+    }
 
     if(categories != null){
         getCategories();
 
         let bestOffer = loadFromLocal('bestOffer');
-        //console.log(bestOffer);
-        if(bestOffer == ''){
-            let rand = Math.floor(Math.random() * featuredProducts.results.length - 1);
-            alert(rand);
-            let id = featuredProducts.results[rand].item_id;
-            const productDetails = await apiResponse("https://ebay-scraper.p.rapidapi.com/product-details", 'POST', id);
-            let details = productDetails;
-            let img_url = '';
 
-            for(let i = 0; i < featuredProducts.results.length; i++){
-                if(id == featuredProducts.results[i].item_id){
-                    img_url = featuredProducts.results[i].images.url;
-                }
-            }
-            details['img_url'] = img_url;
-            saveToLocal('bestOffer', details);
-            getBestOffer(details);
-            
+        if(bestOffer == ''){
+            let rand = Math.floor(Math.random() * featuredProducts.data.length - 1) + 1;
+            bestOffer = featuredProducts.data[rand];
+            saveToLocal('bestOffer', bestOffer);
+            getBestOffer(bestOffer);
+            console.log('save today');
         }
         else{
             getBestOffer(bestOffer);
+            console.log('save from previous');
         }
-       
+        console.log(bestOffer);
     }
-    
+
     if(todaysDeal != null){
         todaysDeal.innerHTML = "";
-        for(let i = 0; i < featuredDaily.results.length; i++){
-            if(i < 5){
-                let rand = Math.floor(Math.random() * featuredDaily.results.length - 1) + 1;
-                todaysDeal.innerHTML += getProduct(featuredDaily.results[rand].images.url, featuredDaily.results[rand].title, featuredDaily.results[rand].display_price.value, featuredDaily.results[rand].item_id);
+
+        let items = [];
+        while(items.length < 8){
+            let rand = Math.floor(Math.random() * featuredProducts.data.length-1) + 1;
+            if(!items.includes(rand)){
+                items.push(rand);
+                console.log(rand);
+                todaysDeal.innerHTML += getProduct(featuredProducts.data[rand]);
             }
         }
     }
-
     //display the products
     if(productsLists != null){
         productsLists.innerHTML = "";
@@ -792,34 +763,12 @@ apiCall = async () =>{
 
         let url = window.location;
         let searchParams = new URLSearchParams(url.search);
-        const id = searchParams.get('id');
-        let details = loadFromLocal(id);
-        let img_url = "";
-
-        if(details == "" && id != null){
-
-            const productDetails = await apiResponse("https://ebay-scraper.p.rapidapi.com/product-details", 'POST', id);
-            details = productDetails;
-            
-            //search item in daily
-            for(let i = 0; i < featuredDaily.results.length; i++){
-                if(id == featuredDaily.results[i].item_id){
-                    img_url = featuredDaily.results[i].images.url;
-                }
-            }
-            //search item in featured
-            if(img_url == ""){
-                for(let i = 0; i < featuredProducts.results.length; i++){
-                    if(id == featuredProducts.results[i].item_id){
-                        img_url = featuredProducts.results[i].images.url;
-                    }
-                }
-            }
-
-            details['img_url'] = img_url;
-
-            saveToLocal(id, details);
-        }
+        let id = searchParams.get('id');
+        
+        let details = featuredProducts.data[id - 1];
+        // if(details == "" && id != null){
+        //     //saveToLocal(id, details);
+        // }
 
         let cartList = document.getElementById('cart-list');
         if(cartList == null){
@@ -828,16 +777,16 @@ apiCall = async () =>{
         
         //random products for "also you may like"
         let randLikes = [];
-        let total = 12;
+        let total = 5;
         while(randLikes.length < total){
-            let rand = Math.floor(Math.random() * featuredProducts.results.length -1) + 1;
+            let rand = Math.floor(Math.random() * featuredProducts.data.length -1) + 1;
             if(!randLikes.includes(rand)){
                 randLikes.push(rand);
             }
         }
         
         randLikes.forEach(i => {
-            youMayAlsoLIke.innerHTML += getProduct(featuredProducts.results[i].images.url, featuredProducts.results[i].title, featuredProducts.results[i].display_price.value, featuredProducts.results[i].item_id);
+            youMayAlsoLIke.innerHTML += getProduct(featuredProducts.data[i]);
         });
     }
 

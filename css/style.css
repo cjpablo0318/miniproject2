@@ -8,7 +8,6 @@
 body {
     font-family: 'Rubik', sans-serif;
 }
-
 /* navbar */
 .nav-items{
     padding: 5px;
@@ -69,20 +68,19 @@ input:focus {
     padding-bottom: 0px;
 }
 .product-img{
-    margin-top: -25px;
-    width: 80%;
-    height: 200px;
-    padding: 10px
+    margin-top: -53px;
+    width: 100%;
+    padding: 10px;
 }
 .product-btns{
+    border-radius: 10px;
     color: white;
     width: 100%;
     z-index: 999;
 }
 .product-btn-item{
-    height: 25px;
-    width: 25px;
-    background-color: rgb(190, 189, 189);
+    padding: 10px;
+    background-color: #e2e2e2;
     border-radius: 5px;
     cursor: pointer;
     opacity: 0;
@@ -165,9 +163,6 @@ input:focus {
 .category-body::-webkit-scrollbar {
     display: none; 
 }
-hr{
-    border: 1px solid rgb(198, 198, 198);
-}
 
 input:hover{
     border: 1px solid rgb(9, 144, 9);
@@ -178,10 +173,12 @@ input:focus{
 
 /* Product Details */
 .product-specific-details{
-    margin-top: 80px
+    margin-top: 80px;
+    border-radius: 10px;
+    padding: 10px
 }
 .product-specific-details img{
-    height: 100px;
+    height: 80%;
     border-radius: 10px;
 }
 .product-specific-brand{
@@ -393,11 +390,16 @@ form input{
     background-color: rgb(152, 0, 0);
 }
 .my-cart{
-    margin-top: 40px
+    margin-top: 10px;
+    background-color:rgb(243, 243, 243); 
+    padding: 7px;
+    border-radius: 10px;
+    box-shadow: -1px 0px 5px -1px rgba(239, 239, 239, 0.63);
+    -webkit-box-shadow: -1px 0px 5px -1px rgba(239, 239, 239, 0.63);
+    -moz-box-shadow: -1px 0px 5px -1px rgba(239, 239, 239, 0.63);
 }
 .my-cart img{
-    height: 100px;
-    width: 100px;
+    width: 90px;
     padding: 7px;
     border-radius: 10px;
     border: 1px solid rgb(225, 225, 225);
@@ -442,6 +444,7 @@ form input{
     color: black;
     border-color: rgb(225, 225, 225);
 }
+
 
 
 button{
@@ -539,10 +542,22 @@ video{
 .category-container img{
     width: 50%;
 }
+
+
 .best-offer-container{
     padding: 10px;
     background-color: rgb(246, 241, 221);
 }
+.best-offer-container img{
+    width: 80%;
+    height: 100%;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px 0px rgba(77, 77, 77, 0.63);
+    -webkit-box-shadow: 0px 0px 5px -1px rgba(77, 77, 77, 0.63);
+    -moz-box-shadow: 0px 0px 5px -1px rgba(77, 77, 77, 0.63);
+}
+
+
 .promotion-container{
     padding: 10px;
     background-color: #90f6d0;
@@ -553,6 +568,17 @@ video{
     border: none;
     color: white;
     background-color: rgb(9, 144, 9);
+}
+
+
+/* Products */
+.products{
+    margin-top: 20px;
+    padding: 10px;
+    background-color: gray;
+}
+.main-container{
+    padding: 15px
 }
 
 @media screen and (max-width: 600px){

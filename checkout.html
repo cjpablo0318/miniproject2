@@ -16,46 +16,46 @@
 </head>
 <body>
 
-    <!-- Nav bar -->
-    <nav class="navbar navbar-expand-lg bg-light">
-        <div class="container">
-          <a class="navbar-brand" href="#">Ennea Shop</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ms-auto">
-                <div class="nav-items item-center">
-                    <li class="nav-item me-1">
-                        <a class="nav-link" aria-current="page" href="#">
-                            <input type="search" placeholder="Search items">
-                            <i class="fa-solid fa-magnifying-glass"></i>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link position-relative" href="#">
-                            <button type="button" class="position-relative bg-transparent" style="border:none">
-                                <i class="fa-solid fa-cart-shopping"></i>
-                                <span id="cart" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
-                            </button>
-                            <span class="badge text-dark">$100</span>
-                        </a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link ps-3 pe-3" href="#">Log in</a>
-                      </li>
-                      <li class="nav-item nav-item d-flex align-items-center p-1">
-                        <i class="" href="#" >|</i>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link ps-3 pe-3" href="#">Register</a>
-                      </li>
-                </div>
-              
-            </ul>
-          </div>
-        </div>
-    </nav>
+   <!-- Nav bar -->
+   <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="#">Ennea Shop</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+            <div class="nav-items item-center">
+                <li class="nav-item me-1">
+                    <a class="nav-link" aria-current="page" href="#">
+                        <input type="search" placeholder="Search items">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link position-relative" href="./mycart.html">
+                        <button type="button" class="position-relative bg-transparent" style="border:none">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                        </button>
+                        <span class="badge text-dark cart-value">$100</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ps-3 pe-3" href="#">Log in</a>
+                  </li>
+                  <li class="nav-item nav-item d-flex align-items-center p-1">
+                    <i class="" href="#" >|</i>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ps-3 pe-3" href="#">Register</a>
+                  </li>
+            </div>
+          
+        </ul>
+      </div>
+    </div>
+</nav>
 
     <section class="content mt-4">
         <div class="container px-5">
@@ -256,5 +256,6 @@
    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+    <script src="./js/content.js"></script>
 </body>
 </html>
