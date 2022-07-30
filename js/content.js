@@ -6,6 +6,7 @@ const productSpecificDetails = document.getElementById('productSpecificDetails')
 const todaysDeal = document.getElementById('todaysDeal');
 const categories = document.getElementById('categories');
 
+
 //loading data
 _initData = () =>{
     if(productsLists != null){
@@ -97,19 +98,34 @@ return product;
 }
 //display the data of the specific product
 getProductDetails = (details) =>{
+
+    console.log(details);
+    if(checkCart(details.item_id)){
+       let cartLists = loadFromLocal('cart');
+       console.log(cartLists);
+       for(let i = 0; i < cartLists.length; i++){
+            if(details.item_id == cartLists[i].id){
+                details.quantity = cartLists[i].quantity;
+            }
+       }
+    }else{
+        details.quantity = 1;
+    }
+
     document.querySelector('.product-specific_img').src = details.img_url;
     document.querySelector('.product-specific-brand').innerHTML = details.category;
     document.querySelector('.product-specific-title').innerHTML = details.main_title;
     
     let quantity = document.querySelector('.product-specific-value');
     let price = document.querySelector('.product-specific-price');
-    let counter = 1;
+    let counter = parseInt(details.quantity);
     let finalPrice = 0;
 
+    quantity.innerHTML = counter;
     finalPrice = parseInt(details.price) * counter;
     price.innerHTML = getTotalPrice(finalPrice);
 
-    document.querySelector('.fa-minus').onclick = function(){
+    document.querySelector('.fa-minus').parentElement.onclick = function(){
         counter--;
         if(counter - 1 < 0){
             counter = 1;
@@ -119,7 +135,7 @@ getProductDetails = (details) =>{
         finalPrice = parseInt(details.price) * counter;
         price.innerHTML = getTotalPrice(finalPrice);
     }
-    document.querySelector('.fa-plus').onclick = function(){
+    document.querySelector('.fa-plus').parentElement.onclick = function(){
         counter++;
         quantity.innerHTML = counter;
 
@@ -462,17 +478,17 @@ loadCart = () =>{
     let cart = document.getElementById('cart-list');
     if(cart != null){
         cartList();
-    }
-
-    let checkoutBtn = document.querySelector('.checkout');
-    if(checkoutBtn != null){
-        if(cartListFromLocal != ''){
-            checkoutBtn.style.backgroundColor = "green";
-            checkoutBtn.removeAttribute('disabled');
-        }else{
-            checkoutBtn.style.backgroundColor = "gray";
+        let checkoutBtn = document.querySelector('.checkout');
+        if(checkoutBtn != null){
+            if(cartListFromLocal != ''){
+                checkoutBtn.style.backgroundColor = "green";
+                checkoutBtn.removeAttribute('disabled');
+            }else{
+                checkoutBtn.style.backgroundColor = "gray";
+            }
         }
     }
+    getOrders();
 }
 addToCart = (id, quantity, element = null) => {
     let cartListFromLocal = loadFromLocal('cart') || [];
@@ -549,7 +565,7 @@ cartList = () =>{
                 '<img src="'+ cartListFromLocal[i].url + '" alt="">' +
                 '<div class="col mt-1">' +
                     '<div class="row">' +
-                    '<p class="product-name" style="font-size: 16px;"><a href="">' + cartListFromLocal[i].title + '</a></p>' +
+                    '<p class="product-name" style="font-size: 16px;"><a href="./productDetails.html?id=' + cartListFromLocal[i].id + '">' + cartListFromLocal[i].title + '</a></p>' +
                         '<div class="col">' +
                             '<div class="col-6 d-flex align-items-center product-specific-quantity">' +
                                 '<span style="display: none">' + i + '</span>' + 
@@ -595,6 +611,43 @@ cartList = () =>{
     }
 }
 
+getOrders = () =>{
+    let cartList = loadFromLocal('cart');
+    let order = document.getElementById('order-history');
+    let finalPrice = 0;
+    if(order == null){
+        return;
+    }
+    for(let i = 0; i < cartList.length; i++){
+        order.innerHTML += '' +
+        '<div class="row order-details-item">' +
+        '<div class="col-9">' +
+            '<div class="d-flex order-details">' +
+                '<img src="' + cartList[i].url + '" ' +'alt="">' +
+                '<div>' +
+                    '<h6 class="product-name">' + cartList[i].title + '</h6>' +
+                    '<p>x' + cartList[i].quantity + '</p>' +
+                '</div>' +
+            '</div>' +
+        '</div>' +
+        '<div class="col order-details-price">' +
+            '' + getTotalPrice(parseInt(cartList[i].price) * parseInt(cartList[i].quantity)) + '' +
+        '</div>' +
+    '</div>';
+    
+    finalPrice += parseInt(cartList[i].price) * parseInt(cartList[i].quantity);
+    }
+    document.getElementById('subtotal').innerHTML = getTotalPrice(finalPrice);
+    document.getElementById('discount').innerHTML = getTotalPrice(0);
+    document.getElementById('total').innerHTML = getTotalPrice(finalPrice);
+
+    document.getElementById('payment-received').onclick = function(){
+        saveToLocal('cart', '');
+        location.replace("./index.html");
+    }
+
+}
+
 quantityEditor = () =>{
     document.querySelectorAll(".minus").forEach(button => {
         button.onclick = function (){
@@ -614,7 +667,7 @@ quantityEditor = () =>{
             cartListFromLocal[index].quantity = quantityValue;
             price[index].innerHTML = getTotalPrice(parseInt(cartListFromLocal[index].price * cartListFromLocal[index].quantity));
             saveToLocal('cart', cartListFromLocal);
-            loadCart();
+            loadCart(); 
         }
     });
     document.querySelectorAll(".plus").forEach(button => {
@@ -750,13 +803,13 @@ apiCall = async () =>{
             }
         }
     }
-    //display the products
-    if(productsLists != null){
-        productsLists.innerHTML = "";
-        for(let i = 0; i < featuredProducts.results.length; i++){
-            productsLists.innerHTML += getProduct(featuredProducts.results[i].images.url, featuredProducts.results[i].title, featuredProducts.results[i].display_price.value, featuredProducts.results[i].item_id);
-        }
-    }
+    // //display the products
+    // if(productsLists != null){
+    //     productsLists.innerHTML = "";
+    //     for(let i = 0; i < featuredProducts.results.length; i++){
+    //         productsLists.innerHTML += getProduct(featuredProducts.results[i].images.url, featuredProducts.results[i].title, featuredProducts.results[i].display_price.value, featuredProducts.results[i].item_id);
+    //     }
+    // }
 
     if(youMayAlsoLIke != null){
         youMayAlsoLIke.innerHTML = "";
@@ -777,7 +830,7 @@ apiCall = async () =>{
         
         //random products for "also you may like"
         let randLikes = [];
-        let total = 5;
+        let total = 8;
         while(randLikes.length < total){
             let rand = Math.floor(Math.random() * featuredProducts.data.length -1) + 1;
             if(!randLikes.includes(rand)){
@@ -789,6 +842,60 @@ apiCall = async () =>{
             youMayAlsoLIke.innerHTML += getProduct(featuredProducts.data[i]);
         });
     }
+    
+    let allProductsList = document.getElementById('products');
+    if(allProductsList != null){
+        for(let i = 0; i < featuredProducts.data.length; i++){
+            allProductsList.innerHTML += getProduct(featuredProducts.data[i]);
+        }
+
+        let categoryItemContainer = document.getElementById('item-options-container');
+        let categoryCollection = ['Women', 'Men', 'Kids', 'Swim', 'Outwear', 'Home'];
+        if(categoryItemContainer != null){
+            categoryItemContainer.innerHTML = '';
+            
+            categoryItemContainer.innerHTML += '<h6 class="mb-3"><strong>By Category</strong></h6>';
+            for(let i = 0; i < categoryCollection.length; i++){
+                categoryItemContainer.innerHTML += '<div class="item">' +
+                '<input type="checkbox" class="form-check-input me-3" id="' + categoryCollection[i] + '">' +
+                '<label for="' + categoryCollection[i] + '"><span> ' + categoryCollection[i] + '</span> <span style="color: gray">(100)</span></label>' +
+              '</div>';
+            }
+            categoryItemContainer.innerHTML += ' <h6 class="mt-3 mb-3"><strong>By Price</strong></h6>';
+            categoryItemContainer.innerHTML += '<div class="item-center">' +
+            '<span>Min</span>' +
+            '<input type="number" class="form-control mx-2">' +
+            '<span>Max</span>' +
+            '<input type="number" class="form-control mx-2">' +
+          '</div>';
+
+            let filterItemContainer = document.getElementById('filter-collection');
+            let filterSelects = new Array();
+            filterItemContainer.innerHTML = "";
+
+            for(let i = 0; i < categoryCollection.length; i++){
+                document.getElementById(categoryCollection[i]).onclick = function() {
+                    let category = this.parentElement.children[1].children[0].innerHTML;
+                    if(this.checked){
+                       filterSelects.push(category);
+                    }else{
+                        for(let i = 0; i < filterSelects.length; i++){
+                            if(category === filterSelects[i]){
+                                filterSelects.splice(i, 1);
+                            }
+                        }
+                    }
+
+                    filterItemContainer.innerHTML = "";
+                    filterSelects.forEach(item =>{
+                        filterItemContainer.innerHTML += '<span class="filter">' +  item +
+                        '</span>';
+                    });
+                }
+            }
+        }
+    }
+
 
 }
 

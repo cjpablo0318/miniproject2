@@ -16,8 +16,8 @@
 </head>
 <body>
 
-   <!-- Nav bar -->
-   <nav class="navbar navbar-expand-lg bg-light">
+    <!-- Nav bar -->
+    <nav class="navbar navbar-expand-lg bg-light">
     <div class="container">
       <a class="navbar-brand" href="#">Ennea Shop</a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,7 +55,7 @@
         </ul>
       </div>
     </div>
-</nav>
+    </nav>
 
     <section class="content mt-4">
         <div class="container px-5">
@@ -197,26 +197,15 @@
                         <h5 class="">Order Summary</h5>
                         <form action="">
                            <div class="row order-details">
-                                <div class="row order-details-item">
-                                    <div class="col-9">
-                                        <div class="d-flex order-details">
-                                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdi3rs3sz0zG-t1YUH6ugbrM7omd-I21qVBg&usqp=CAU" alt="">
-                                            <div>
-                                                <h6 class="product-name">Personal Branding Webinar</h6>
-                                                <p>x5</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col order-details-price">
-                                        ₱ 999999
-                                    </div>
+                                <div id="order-history">
+
                                 </div>
                                 <hr style="margin-top: 20px;">
                                 <div class="row">
                                     <div class="col-9 order-details-label">
                                        <p>Subtotal</p>
                                     </div>
-                                    <div class="col order-details-price">
+                                    <div class="col order-details-price" id="subtotal">
                                         ₱ 999999
                                     </div>
                                 </div>
@@ -224,7 +213,7 @@
                                     <div class="col-9 order-details-label">
                                        <p> Delivery fee</p>
                                     </div>
-                                    <div class="col order-details-price">
+                                    <div class="col order-details-price" id="discount">
                                         ₱ 999999
                                     </div>
                                 </div>
@@ -233,26 +222,39 @@
                                     <div class="col-9 order-details-label">
                                        <p> Total</p>
                                     </div>
-                                    <div class="col order-details-price-total">
+                                    <div class="col order-details-price-total" id="total">
                                         ₱ 999999
                                     </div>
                                 </div>
+                            </form>
                                 <div class="row mt-3">
                                     <div class="col">
-                                       <button class="cancel w-100">Cancel</button>
+                                        <a href="./index.html" style="color: green; text-decoration: none"><button type="button" class="cancel w-100">Cancel</button></a>
                                     </div>
                                     <div class="col">
-                                        <button class="checkout w-100">Pay Now</button>
+                                        <button type="button" class="checkout w-100" data-bs-toggle="modal" data-bs-target="#paymentResult">Pay Now</button>
                                     </div>
                                 </div>
                            </div>
-                       </form>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+  
+  <!-- Modal -->
+  <div class="modal fade" id="paymentResult" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content text-center p-5">
+            <i class="fa-solid fa-circle-check" style="font-size: 50px; padding: 10px; color: green"></i>
+            <h4>Order received</h4>
+            <div class="item-center p-3">
+                <button class="cancel w-25" id="payment-received">Home</button>
+            </div>
+      </div>
+    </div>
+  </div>
    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>

@@ -38,5 +38,19 @@ $sql = "CREATE TABLE IF NOT EXISTS `tblusers` (
     echo "Error creating table: " . mysqli_error($conn);
   }
 
+  $sql = "CREATE TABLE IF NOT EXISTS `tblproducts` (
+    `item_id` int(11) NOT NULL AUTO_INCREMENT,
+    `main_title` varchar(1000) NOT NULL,
+    `img_url` varchar(1000) NOT NULL,
+    `price` int(255) NOT NULL,
+    `color` varchar(255) DEFAULT NULL,
+    `sizes` varchar(255) DEFAULT NULL,
+    `category` int(10) DEFAULT NULL,
+    PRIMARY KEY (`item_id`))";
+  
+    if (!mysqli_query($conn, $sql)) {
+      echo "Error creating table: " . mysqli_error($conn);
+    }
+    
   $conn = mysqli_connect($servername, $username, $password, $dbName);
 ?>

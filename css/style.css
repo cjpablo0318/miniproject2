@@ -570,15 +570,35 @@ video{
     background-color: rgb(9, 144, 9);
 }
 
-
 /* Products */
 .products{
     margin-top: 20px;
     padding: 10px;
-    background-color: gray;
+}
+.sidebar-container{
+    padding: 10px;
+    background-color: rgb(230, 230, 230);
+    border-radius: 10px;
+}
+.sidebar-container .item{
+    font-size: 15px;
+}
+.sidebar-container input:checked{
+    background-color: #358e02;
+    border: none;
+}
+.sidebar-container input:focus{
+    border: 1px solid #358e02;
 }
 .main-container{
     padding: 15px
+}
+.filter{
+    padding: 5px 10px;
+    background-color: rgb(231, 231, 231);
+    border-radius: 20px;
+    font-size: 16px;
+    margin-right: 5px
 }
 
 @media screen and (max-width: 600px){
