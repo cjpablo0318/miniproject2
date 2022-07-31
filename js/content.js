@@ -98,8 +98,6 @@ return product;
 }
 //display the data of the specific product
 getProductDetails = (details) =>{
-
-    console.log(details);
     if(checkCart(details.item_id)){
        let cartLists = loadFromLocal('cart');
        console.log(cartLists);
@@ -113,7 +111,7 @@ getProductDetails = (details) =>{
     }
 
     document.querySelector('.product-specific_img').src = details.img_url;
-    document.querySelector('.product-specific-brand').innerHTML = details.category;
+    document.querySelector('.product-specific-brand').style.display = 'none';//innerHTML = details.category;
     document.querySelector('.product-specific-title').innerHTML = details.main_title;
     
     let quantity = document.querySelector('.product-specific-value');
@@ -217,12 +215,13 @@ getTotalPrice = (price) =>{
 //getting the category list
 getCategories = () =>{
     let categoryList = ['Men', 'Women', 'Kids', 'Swim', 'Outerwear', 'Home'];
+    let images = ['https://esprit.scene7.com/is/image/esprit/992EE2K306_455_48?$SFCC_L$'];
     for(let i = 0; i < categoryList.length; i++){
         let category = '' +
         '<div class="col-lg-2 col-sm-3">' + 
             '<div class="category-container">' + 
                 '<div class="row item-center py-3">' + 
-                    '<img src="./img/—Pngtree—white t-shirt_2005822.png" alt="" class="img-fluid">' + 
+                    '<img src="' + images[0]  + '" alt="" class="img-fluid">' + 
                 '</div>' + 
                 '<div class="row item-center pb-4"><strong class="text-center">' + categoryList[i] +
                 '</strong></div>' + 
@@ -331,14 +330,14 @@ logIn = () => {
                         '</div>' +
                         '<div class="row mt-3 mb-5 item-center">' +
                             '<div class="col-8">' +
-                                '<form action="" class="">' +
+                                '<form action="./php/ennea.api.php" class="" method="post">' +
                                     '<div>' +
                                         '<label for="email">Email/phone number</label>' +
-                                        '<input type="email" id="email">' +
+                                        '<input type="email" id="email" name="email">' +
                                     '</div>' +
                                     '<div class="mt-3">' +
                                         '<label for="password">Password</label>' +
-                                        '<input type="password" id="password">' +
+                                        '<input type="password" id="password" name="password">' +
                                     '</div>' +
                                     '<div class="d-flex mt-3">' +
                                         '<div class="col">' +
@@ -716,7 +715,7 @@ quantityEditor = () =>{
     });
 }
 //waiting for data
-apiResponse = async (url, method = "GET", ...values) =>{
+apiResponse = async (url) =>{
     let options = {};
 
     //  switch(method){
@@ -753,6 +752,7 @@ apiCall = async () =>{
     const today = new Date().getMonth() + 1 + "" + new Date().getDate() + "" + new Date().getFullYear();
     let featuredProducts = loadFromLocal('products');
     //localStorage.clear();
+
     //load cart first
     loadCart();
 
@@ -781,13 +781,10 @@ apiCall = async () =>{
             bestOffer = featuredProducts.data[rand];
             saveToLocal('bestOffer', bestOffer);
             getBestOffer(bestOffer);
-            console.log('save today');
         }
         else{
             getBestOffer(bestOffer);
-            console.log('save from previous');
         }
-        console.log(bestOffer);
     }
 
     if(todaysDeal != null){
@@ -803,13 +800,6 @@ apiCall = async () =>{
             }
         }
     }
-    // //display the products
-    // if(productsLists != null){
-    //     productsLists.innerHTML = "";
-    //     for(let i = 0; i < featuredProducts.results.length; i++){
-    //         productsLists.innerHTML += getProduct(featuredProducts.results[i].images.url, featuredProducts.results[i].title, featuredProducts.results[i].display_price.value, featuredProducts.results[i].item_id);
-    //     }
-    // }
 
     if(youMayAlsoLIke != null){
         youMayAlsoLIke.innerHTML = "";

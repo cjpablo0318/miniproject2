@@ -1,9 +1,14 @@
 <?php
 header("Content-Type:application/json");
 
-if(isset($_GET['email']) && isset($_GET['password'])){
+if(isset($_POST['email']) && isset($_POST['password'])){
     include('ennea.db.php');
-    getUser(1, $conn);
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    checkUser($conn, $email, $password);
+    //echo($_POST['email'] . " : : " . $_POST['password']);
+    //getUser(1, $conn);
 }
 if(isset($_GET['products'])){
     include('ennea.db.php');
@@ -13,8 +18,12 @@ if(isset($_GET['categories'])){
     include('ennea.db.php');
     categories($conn);
 }
-
-function getUser($id, $conn){
+function checkUser($conn, $email, $password){
+    $query = "Select * from tblusers where email='" . $email. "' and password='" . $password . "'";
+    $result = mysqli_query($conn, $query);
+    echo mysqli_num_rows($result);
+}
+function getUser($conn, $id){
     $query = "SELECT * FROM tblusers where ID=$id";
     $result = mysqli_query($conn, $query);
 
@@ -42,7 +51,7 @@ function getUser($id, $conn){
     echo json_encode($data);
 }
 function products($conn){
-    $query = "SELECT * FROM tblProducts";
+    $query = "SELECT item_id, main_title, img_url, price, color, sizes, category FROM tblProducts";
     $result = mysqli_query($conn, $query);
     $data = array();
     while($row = mysqli_fetch_assoc($result)){
@@ -76,5 +85,4 @@ function categories($conn){
     }
     echo json_encode($data);
 }
-
 ?>

@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="./css/flickity.css">
 </head>
 <body>
+
     <!-- Nav bar -->
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container">
@@ -32,10 +33,10 @@
                       <li class="nav-item">
                         <a class="nav-link position-relative" href="./mycart.html">
                             <button type="button" class="position-relative bg-transparent" style="border:none">
-                                <i class="fa-solid fa-cart-shopping"></i>
+                                <i class="fa-solid fa-cart-shopping cart-icon"></i>
                                 <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
                             </button>
-                            <span class="badge text-dark cart-value">$100</span>
+                            <span class="badge cart-value">$100</span>
                         </a>
                       </li>
                       <li class="nav-item">
@@ -96,7 +97,7 @@
                                 <span class="product-specific-label">Price</span>
                                 <div class="row mt-1">
                                     <div class="col">
-                                        <span style="font-size: 25px;" id="best-price">₱ 500</span> 
+                                        <span style="font-size: 25px; color: #0B9444;;" id="best-price">₱ 500</span> 
                                     </div>
                                 </div>
                             </div>
@@ -128,11 +129,37 @@
                     <button>shop now</button>
                 </div>
             </div>
-            <div class="row mt-4 mb-4">
-                <h5><strong>Featured</strong></h5>
+            <div class="row my-5">
+                <h5><strong>Featured Products</strong><span class="float-end" style="font-size: 15px;"><a href="./products.html" style="text-decoration: none;color: black">View All</a></span></h5>
                 <div class="row" id="todaysDeal">
                     
                 </div>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <footer>
+            <div class="footer-content">
+                <h3>Ennea's Apparel Shop</h3>
+                <p>This Web App is made with the intention to interact and make people in love with online shopping. Although this is just a project, we made sure that this web app is organized and can interact with whom it may use in the future.</p>
+                <ul class="socials">
+                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                    <li><a href="#"><i class="fa fa-instagram"></i></a></li>
+                </ul>
+            </div>
+        </footer>
+        <div class="footer-bottom">
+            <p>copyright &copy;2022 <a href="#">Ennea's Apparel Shop</a>  </p>
+            <div class="footer-menu">
+                <ul class="f-menu">
+                <li><a href="">Home</a></li>
+                <li><a href="">Shop</a></li>
+                <li><a href="">Log In</a></li>
+                <li><a href="">Sign Up</a></li>
+                </ul>
             </div>
         </div>
     </section>
