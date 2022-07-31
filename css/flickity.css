@@ -1,0 +1,46 @@
+/* external css: flickity.css */
+
+* { box-sizing: border-box; }
+
+body { font-family: sans-serif; }
+
+.carousel {
+    margin-top: 20px
+}
+
+.carousel-cell {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    margin-right: 10px;
+    background-color: rgb(258, 258, 258);
+    border-radius: 0px;
+    counter-increment: carousel-cell;
+    cursor: pointer;
+}
+.carousel-cell:hover{
+    color: #FA8900;;
+}
+.carousel-cell.is-selected{
+    background: rgb(258, 258, 258);
+}
+.carousel-cell.is-selected:hover{
+    color: #FA8900;;
+}
+
+/* cell number */
+.flickity-page-dots{
+    display: none;
+}
+.flickity-button{
+    background-color: #dcdcdc;
+    color: rgb(255, 255, 255);
+    width: 30px;
+    height: 30px;
+    opacity: .3;
+}
+.flickity-button:hover{
+  opacity: 1;
+  background-color: #a4a4a4;
+}

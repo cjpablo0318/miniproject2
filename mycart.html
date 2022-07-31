@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EnNea</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/8ad5cf4f0f.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+<body>
+
+   <!-- Nav bar -->
+   <nav class="navbar navbar-expand-lg bg-light">
+    <div class="container">
+      <a class="navbar-brand" href="./index.html">Ennea Shop</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav ms-auto">
+            <div class="nav-items item-center">
+                <li class="nav-item me-1">
+                    <a class="nav-link" aria-current="page" href="#">
+                        <input type="search" placeholder="Search items">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link position-relative" href="./mycart.html">
+                        <button type="button" class="position-relative bg-transparent" style="border:none">
+                            <i class="fa-solid fa-cart-shopping"></i>
+                            <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                        </button>
+                        <span class="badge text-dark cart-value">$100</span>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ps-3 pe-3" href="./getStarted.html">Log in</a>
+                  </li>
+                  <li class="nav-item nav-item d-flex align-items-center p-1">
+                    <i class="" href="#" >|</i>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link ps-3 pe-3" href="./getStarted.html">Register</a>
+                  </li>
+            </div>
+          
+        </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section class="content mt-4">
+        <div class="container px-5 g-0">
+            <div class="row d-flex">
+                <div class="col d-flex justify-content-start align-items-center">
+                    <span class="fs-4 me-2"><strong>My Cart</strong></span>
+                    <span class="badge rounded-pill product-specific-brand" style="font-size: 12px">1</span>
+                </div>
+                <div class="col">
+                    <button class="btn-delete-all float-end">Empty Cart</button>
+                </div>
+            </div>
+            <div class="row" id="cart-list">
+                
+            </div>
+            <div class="row" style="margin-top: 80px">
+                <hr style="border: 1px solid rgb(239, 239, 239)">
+                <div class="col">
+                    
+                </div>
+                <div class="col">
+                    <div class="float-end d-flex">
+                        <span class="px-5 pt-2"><h6>Subtotal</h6></span>
+                        <span class="pe-3"><h4><strong class="cart-value">500</strong></h4></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-5">
+                <div class="col d-flex justify-content-end align-items-end">
+                    <a href="./index.html"><button class="cancel">Continue Shopping</button></a>
+                    <a href="./checkout.html"><button class="checkout" disabled>Proceed Checkout</button></a>
+                </div>
+            </div>
+
+            <div class="row mt-5">
+                <hr style="border: 1px solid rgb(239, 239, 239)">
+                <h5 class="">You may also like </h5>
+                <div class="row" id="youMayAlsoLIke">
+                </div>
+            </div>
+            <div class="row mt-5 mb-5">
+                <hr style="border: 1px solid rgb(239, 239, 239)">
+                <h5 class="">Favorites </h5>
+                <div class="row" id="favorites">
+                    <p class="lead p-5 text-center">Nothing found</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+    <script src="./js/content.js"></script>
+</body>
+</html>

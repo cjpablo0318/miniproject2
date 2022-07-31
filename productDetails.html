@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>EnNea</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/8ad5cf4f0f.js" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css"> <!--Flickity-->
+    <link rel="stylesheet" href="./css/style.css">
+
+</head>
+<body>
+
+     <!-- Nav bar -->
+    <!-- Nav bar -->
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container">
+          <a class="navbar-brand" href="./index.html">Ennea Shop</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav ms-auto">
+                <div class="nav-items item-center">
+                    <li class="nav-item me-1">
+                        <a class="nav-link" aria-current="page" href="#">
+                            <input type="search" placeholder="Search items">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link position-relative" href="./mycart.html">
+                            <button type="button" class="position-relative bg-transparent" style="border:none">
+                                <i class="fa-solid fa-cart-shopping"></i>
+                                <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
+                            </button>
+                            <span class="badge text-dark cart-value">$100</span>
+                        </a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link ps-3 pe-3" href="./getStarted.html">Log in</a>
+                      </li>
+                      <li class="nav-item nav-item d-flex align-items-center p-1">
+                        <i class="" href="#" >|</i>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link ps-3 pe-3" href="./getStarted.html">Register</a>
+                      </li>
+                </div>
+              
+            </ul>
+          </div>
+        </div>
+    </nav>
+
+    <section class="content mt-4">
+        <div class="container px-5">
+            <div class="row product-specific-details" id="productSpecificDetails">
+                <div class="col-lg-6 item-center align-items-start">
+                    <img src="" alt="" class="img-fluid product-specific_img">
+                </div>
+                <div class="col mt-4" style=" padding-top: 9px; border-radius: 5px">
+                    <div class="row">
+                        <div>
+                            <span class="product-specific-brand">Category</span>
+                        </div>
+                        <h4 class="product-specific-title mb-4">Title</h4>
+                        
+                        <div class="row mb-4">
+                            <div class="col-6 d-flex align-items-center product-specific-quantity">
+                                <button><i class="fa-solid fa-minus"></i></button>
+                                <button style="border: none; color: rgb(46, 46, 46); cursor: default; font-size: 16px; background-color: transparent " class="product-specific-value">1</button>
+                                <button><i class="fa-solid fa-plus"></i></i></button>
+                            </div>
+                            <div class="col">
+                                <span class="product-specific-label">Price</span>
+                                <div class="row mt-1">
+                                    <div class="col">
+                                        <span><strong style="font-size: 25px;" class="product-specific-price">₱ 500</strong></span> 
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h6 class="product-specific-label">Colors</h6>
+                        <div class="d-flex product-specific-variant product-specific-variant-color">
+                            <button>White</button>
+                        </div>
+                        <h6 class="product-specific-label">Sizes</h6>
+                        <div class="d-flex product-specific-variant product-specific-variant-sizes">
+                            <button>White</button>
+                            <button>red</button>
+                            <button>black</button>
+                        </div>
+                        <div class="row more-product-info mt-3 mb-3">
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="product-specific-label mt-4">Return policy</h6>
+                                    <span style="font-size: 14px;" class="product-specific-refund-policy">Money back, Change</span>
+                                </div>
+                                <div class="col">
+                                    <h6 class="product-specific-label mt-4">Inventory</h6>
+                                    <span style="font-size: 14px;" class="product-specific-inventory">Inventory Location</span>
+                                </div>
+                           </div>
+                           <h6 class="product-specific-label mt-4">Shipping</h6>
+                           <span style="font-size: 14px;" class="product-specific-shipping">International</span>
+                        </div>
+                        <div class="row ms-1 item-center">
+                            <div class="col order-details">
+                                <button class="pt-2 pb-2 add-to-cart mt-3 mb-3 w-100">Add to cart</button>
+                            </div>
+                            <div class="col order-details">
+                                <button class="pt-2 pb-2 mt-3 mb-3 checkout w-100">Buy now</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row product-specific-more-info-lg" style="background-color: white">
+
+                </div>
+            </div>
+            <div class="row mt-3">
+                <hr>
+                <h5 class="">You may also like </h5>
+                <div class="row" id="youMayAlsoLIke">
+                </div>
+            </div>
+            <div class="row mt-5 mb-5">
+                <hr>
+                <h5 class="">Favorites </h5>
+                <div class="row" id="favorites">
+                    <p class="lead p-5 text-center">Nothing found</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <script src="https://cdn.jsdelivr.net/npm/bo
+    otstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+    <script src="./js/content.js"></script>
+</body>
+</html>
