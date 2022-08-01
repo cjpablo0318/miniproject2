@@ -5,7 +5,7 @@ const youMayAlsoLIke = document.getElementById('youMayAlsoLIke');
 const productSpecificDetails = document.getElementById('productSpecificDetails');
 const todaysDeal = document.getElementById('todaysDeal');
 const categories = document.getElementById('categories');
-
+const newProducts = document.getElementById('newProducts');
 
 //loading data
 _initData = () =>{
@@ -14,6 +14,12 @@ _initData = () =>{
     }
     if(youMayAlsoLIke != null){
         youMayAlsoLIke.innerHTML = productsPlaceHolder(12);
+    }
+    if(todaysDeal != null){
+        todaysDeal.innerHTML = productsPlaceHolder(12);
+    }
+    if(newProducts != null){
+        newProducts.innerHTML = productsPlaceHolder(6);
     }
 }
 
@@ -187,6 +193,11 @@ getProductDetails = (details) =>{
     addCart.onclick = function(){
         addCart.innerHTML = "View cart"; 
         addToCart(details.item_id, counter);
+    }
+
+    let buyNowBtn = document.getElementById('product-specific-buyNow');
+    if(buyNowBtn != null){
+        buyNowBtn.href = './checkout.html?id=' + details.item_id;
     }
     return;
     //more product info
@@ -617,6 +628,27 @@ getOrders = () =>{
     if(order == null){
         return;
     }
+    let url = window.location;
+    let searchParams = new URLSearchParams(url.search);
+    let id = searchParams.get('id');
+
+    if(id!= null){
+        let product = loadFromLocal('products');
+        cartList = new Array();
+        for(let i = 0; i < product.data.length; i++){
+            if(product.data[i].item_id == id){
+                let itemToBuy = new Array();
+                itemToBuy.id = product.data[i].item_id;
+                itemToBuy.url = product.data[i].img_url;
+                itemToBuy.title = product.data[i].main_title;
+                itemToBuy.quantity = 1;
+                itemToBuy.price = product.data[i].price;
+                cartList.push(itemToBuy);
+                break;
+            }
+        }
+    }
+    console.log(cartList);
     for(let i = 0; i < cartList.length; i++){
         order.innerHTML += '' +
         '<div class="row order-details-item">' +
@@ -770,7 +802,7 @@ apiCall = async () =>{
         featuredProducts = await apiResponse('./php/ennea.api.php?products=1');
         saveToLocal('products', featuredProducts);
     }
-
+    
     if(categories != null){
         getCategories();
 
@@ -788,14 +820,18 @@ apiCall = async () =>{
     }
 
     if(todaysDeal != null){
-        todaysDeal.innerHTML = "";
+        newProducts.innerHTML = "";
+        for(let i = featuredProducts.data.length-1; i >= parseInt((featuredProducts.data.length - 1) - 9); i--){
+            console.log(featuredProducts.data[i]);
+            newProducts.innerHTML += getProduct(featuredProducts.data[i]);
+        }
 
+        todaysDeal.innerHTML = "";
         let items = [];
         while(items.length < 8){
             let rand = Math.floor(Math.random() * featuredProducts.data.length-1) + 1;
             if(!items.includes(rand)){
                 items.push(rand);
-                console.log(rand);
                 todaysDeal.innerHTML += getProduct(featuredProducts.data[rand]);
             }
         }
