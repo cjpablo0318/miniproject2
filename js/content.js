@@ -5,7 +5,7 @@ const youMayAlsoLIke = document.getElementById('youMayAlsoLIke');
 const productSpecificDetails = document.getElementById('productSpecificDetails');
 const todaysDeal = document.getElementById('todaysDeal');
 const categories = document.getElementById('categories');
-
+const newProducts = document.getElementById('newProducts');
 
 //loading data
 _initData = () =>{
@@ -14,6 +14,12 @@ _initData = () =>{
     }
     if(youMayAlsoLIke != null){
         youMayAlsoLIke.innerHTML = productsPlaceHolder(12);
+    }
+    if(todaysDeal != null){
+        todaysDeal.innerHTML = productsPlaceHolder(12);
+    }
+    if(newProducts != null){
+        newProducts.innerHTML = productsPlaceHolder(6);
     }
 }
 
@@ -59,21 +65,17 @@ productsPlaceHolder = (number) =>{
 //get the product container filled with data from the api
 getProduct = (details) =>{
     let product = ''+
-        '<div class="col-xl-3 col-lg-4 col-md-4 g-2">'+
+        '<div class="col-xl-3 col-lg-4 col-md-4 g-3">'+
             '<div class="product-container">'+
                 '<div class="">'+
                     '<div class="row">'+
-                        '<div class="product-btns px-4 py-2 ">'+
+                        '<div class="product-btns">'+
                             '<div class="product-btn-item item-center float-start" onclick="addToCart('+details.item_id+',1, this)">';
-                                if(checkCart(details.item_id)){
-                                    product += '<i class="fa-solid fa-circle-check" style="color: green"></i>';
-                                }else{
-                                    product += '<i class="fa-solid fa-cart-plus"></i>';
-                                }
+                                
                                 
     product +=              '</div>'+
                             '<div class="product-btn-item item-center float-end ">'+
-                                '<i class="fa-solid fa-heart"></i>'+
+                                '<i class="fa-solid fa-heart d-none"></i>'+
                             '</div>'+
                         '</div>'+
                         '<a href="./productDetails.html?id=' + details.item_id + '" style="text-decoration: none; color: black">' +
@@ -83,9 +85,17 @@ getProduct = (details) =>{
                     '</div>'+
                     '<div class="row product-details">'+
                         '<p class="product-name">' + details.main_title + '</p>'+ 
-                        '<p class="product-label-light">Price</p>'+
+                        '<p class="product-label-light">Price</p></a>'+
                         '<p class="product-price">'+
-                            '<span class="product-price-now"> ' + getTotalPrice(parseInt(details.price)) + '</span> '+
+                            '<span class="product-price-now"> ' + getTotalPrice(parseInt(details.price)) + '</span> <button class="add-to-cart float-end" style="color: green" onclick="addToCart('+details.item_id+',1, this)">';
+
+                                if(checkCart(details.item_id)){
+                                    product += '<i class="fa-solid fa-circle-check" style="color: green"></i> View cart';
+                                }else{
+                                    product += '<i class="fa-solid fa-cart-plus"></i> Add to Cart';
+                                }
+
+    product+=                '</button>'+
                         '</p> '+
                     '</div>'+
                     '<div class="row product-details d-none">'+
@@ -96,6 +106,7 @@ getProduct = (details) =>{
         '</div>';
 return product; 
 }
+
 //display the data of the specific product
 getProductDetails = (details) =>{
     if(checkCart(details.item_id)){
@@ -188,6 +199,11 @@ getProductDetails = (details) =>{
         addCart.innerHTML = "View cart"; 
         addToCart(details.item_id, counter);
     }
+
+    let buyNowBtn = document.getElementById('product-specific-buyNow');
+    if(buyNowBtn != null){
+        buyNowBtn.href = './checkout.html?id=' + details.item_id;
+    }
     return;
     //more product info
     let productKeys = Object.keys(details.specifications);
@@ -221,9 +237,9 @@ getCategories = () =>{
         '<div class="col-lg-2 col-sm-3">' + 
             '<div class="category-container">' + 
                 '<div class="row item-center py-3">' + 
-                    '<img src="' + images[0]  + '" alt="" class="img-fluid">' + 
+                    // '<img src="' + images[0]  + '" alt="" class="img-fluid">' + 
                 '</div>' + 
-                '<div class="row item-center pb-4"><strong class="text-center">' + categoryList[i] +
+                '<div class="row item-center pb-4" style="margin-top: -10px"><strong class="text-center">' + categoryList[i] +
                 '</strong></div>' + 
             '</div>' + 
         '</div>';
@@ -333,7 +349,7 @@ logIn = () => {
                                 '<form action="./php/ennea.api.php" class="" method="post">' +
                                     '<div>' +
                                         '<label for="email">Email/phone number</label>' +
-                                        '<input type="email" id="email" name="email">' +
+                                        '<input type="text" id="email" name="username">' +
                                     '</div>' +
                                     '<div class="mt-3">' +
                                         '<label for="password">Password</label>' +
@@ -349,7 +365,7 @@ logIn = () => {
                                         '</div>' +
                                     '</div>' +
                                     '<div class="row mt-5">' +
-                                        '<button class="checkout py-2">Log in</button>' +
+                                        '<button class="checkout py-2" name="login">Log in</button>' +
                                         '<button class="cancel py-2 mt-3" onclick="signUp()">Sign up</button>'+ 
                                     '</div>' +
                                 '</form>' +
@@ -394,23 +410,23 @@ signUp = () =>{
                 '</div>' +
                 '<div class="row mt-3 mb-5 item-center">' +
                     '<div class="col-8">' +
-                        '<form action="" class="">' +
+                        '<form action="./php/ennea.api.php" method="post" class="">' +
                             '<div>' +
                                 '<label for="name">Display name</label>' +
-                                '<input type="text" id="name">' +
+                                '<input type="text" id="name" name="name">' +
                             '</div>' +
                             '<div class="mt-3">' +
                                 '<label for="password">Password</label>' +
-                                '<input type="password" id="password">' +
+                                '<input type="password" id="password" name="password">' +
                             '</div>' +
                             '<div class="mt-3">' +
                                 '<label for="cpassword">Confirm password</label>' +
-                                '<input type="password" id="cpassword">' +
+                                '<input type="password" id="cpassword" name="cpassword">' +
                             '</div>' +
                             '<div class="mt-3 d-flex align-items-end">' +
                                 '<div class="col-10">' +
                                     '<label for="number">Phone number</label>' +
-                                    '<input type="number" id="number">' +
+                                    '<input type="number" id="number" name="number">' +
                                 '</div>' +
                                 '<div class="col d-flex justify-content-end">' +
                                     '<button class="btn-send-code">send</button>' +
@@ -429,11 +445,11 @@ signUp = () =>{
                             '<div class="d-flex text-center">' +
                                 '<p style="font-size: 14px">By creating an account, you agree to the Terms and condition and Privacy Policy of the app.</p>' +
                             '</div>' +
-                        '</form>' +
-                        '<div class="row mt-5">' +
-                            '<button class="checkout py-2">Sign up</button>' +
+                            '<div class="row mt-5">' +
+                            '<button type="submit" class="checkout py-2" name="signUp">Sign up</button>' +
                             '<button class="cancel py-2 mt-3" onclick="logIn();">Log in</button>' +
                         '</div>' +
+                        '</form>' +
                     '</div>' +
                 '</div>' +
             '</div>' +
@@ -450,6 +466,7 @@ signUp();
 loggedInUserID = () =>{
     return loadFromLocal('userId');
 }
+
 
 //adding to cart function
 loadCart = () =>{
@@ -495,14 +512,25 @@ addToCart = (id, quantity, element = null) => {
         //save to database
     }
 
-   if(element != null){
-        element.innerHTML = '<i class="fa-solid fa-circle-check" style="color: green"></i>';
-   }
-
     if(checkCart(id)){
         location.replace("./mycart.html");
         return;
     }
+
+   if(element != null){
+        let myAlert = document.querySelector('.toast');
+        let bsAlert = new bootstrap.Toast(myAlert);
+
+        element.innerHTML = '<span class="spinner-border text-success" style="height: 15px; width: 15px"></span> Adding...';
+        setTimeout(() => {
+            element.innerHTML = '<i class="fa-solid fa-circle-check" style="color: green"></i> View cart';
+            bsAlert.show();
+        }, 1500);
+
+        setTimeout(() => {
+            bsAlert.hide();
+        }, 3000);
+   }
 
     if(cartListFromLocal != ''){
         for(let i = 0; i < cartListFromLocal.length; i++){
@@ -617,6 +645,27 @@ getOrders = () =>{
     if(order == null){
         return;
     }
+    let url = window.location;
+    let searchParams = new URLSearchParams(url.search);
+    let id = searchParams.get('id');
+
+    if(id!= null){
+        let product = loadFromLocal('products');
+        cartList = new Array();
+        for(let i = 0; i < product.data.length; i++){
+            if(product.data[i].item_id == id){
+                let itemToBuy = new Array();
+                itemToBuy.id = product.data[i].item_id;
+                itemToBuy.url = product.data[i].img_url;
+                itemToBuy.title = product.data[i].main_title;
+                itemToBuy.quantity = 1;
+                itemToBuy.price = product.data[i].price;
+                cartList.push(itemToBuy);
+                break;
+            }
+        }
+    }
+    console.log(cartList);
     for(let i = 0; i < cartList.length; i++){
         order.innerHTML += '' +
         '<div class="row order-details-item">' +
@@ -749,7 +798,7 @@ apiResponse = async (url) =>{
 
 //call each api
 apiCall = async () =>{
-    const today = new Date().getMonth() + 1 + "" + new Date().getDate() + "" + new Date().getFullYear();
+    //const today = new Date().getMonth() + 1 + "" + new Date().getDate() + "" + new Date().getFullYear();
     let featuredProducts = loadFromLocal('products');
     //localStorage.clear();
 
@@ -766,11 +815,13 @@ apiCall = async () =>{
     //const currentLogIn = await apiResponse('./php/ennea.api.php?email=email&password=dadas');
     //console.log(currentLogIn);
 
-    if(featuredProducts == ''){
-        featuredProducts = await apiResponse('./php/ennea.api.php?products=1');
-        saveToLocal('products', featuredProducts);
-    }
-
+    //if(featuredProducts == ''){
+        
+    //}
+    
+    featuredProducts = await apiResponse('./php/ennea.api.php?products=1');
+    saveToLocal('products', featuredProducts);
+    
     if(categories != null){
         getCategories();
 
@@ -788,14 +839,18 @@ apiCall = async () =>{
     }
 
     if(todaysDeal != null){
-        todaysDeal.innerHTML = "";
+        newProducts.innerHTML = "";
+        for(let i = featuredProducts.data.length-1; i >= parseInt((featuredProducts.data.length - 1) - 9); i--){
+            console.log(featuredProducts.data[i]);
+            newProducts.innerHTML += getProduct(featuredProducts.data[i]);
+        }
 
+        todaysDeal.innerHTML = "";
         let items = [];
         while(items.length < 8){
             let rand = Math.floor(Math.random() * featuredProducts.data.length-1) + 1;
             if(!items.includes(rand)){
                 items.push(rand);
-                console.log(rand);
                 todaysDeal.innerHTML += getProduct(featuredProducts.data[rand]);
             }
         }

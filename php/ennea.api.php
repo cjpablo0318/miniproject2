@@ -1,6 +1,34 @@
 <?php
 header("Content-Type:application/json");
 
+if(isset($_POST['signUp'])){
+    if(isset($_POST['name']) && isset($_POST['password']) && $_POST['cpassword'] && $_POST['number']){
+        include('ennea.db.php');
+        $name = $_POST['name'];
+        $password = $_POST['password'];
+        $cpassword = $_POST['cpassword'];
+        $number = $_POST['number'];
+
+        if($password != $cpassword){
+            echo 'password not equal';
+            return;
+        }
+
+        savePerson($conn, $name, $password, $number);
+
+    }else{
+        echo 'required missing fields';
+    }
+}
+if(isset($_POST['login'])){
+    if(isset($_POST['username']) && isset($_POST['password'])){
+        include('ennea.db.php');
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+        login($conn, $username, $password);
+    }
+}
+
 if(isset($_POST['email']) && isset($_POST['password'])){
     include('ennea.db.php');
     $email = $_POST['email'];
@@ -17,6 +45,20 @@ if(isset($_GET['products'])){
 if(isset($_GET['categories'])){
     include('ennea.db.php');
     categories($conn);
+}
+
+//functions
+function savePerson($conn, $name, $password, $number){
+    $query = "INSERT into tblusers(first, password, number) VALUES('" . $name . "','" . $password . "','" . $number . "')";
+    $result = mysqli_query($conn, $query);
+}
+function login($conn, $username, $password){
+    $query = "SELECT * FROM tblusers WHERE email = '" . $username . "' AND password = '" . $password . "' OR number ='" . $username . "' AND password = '" . $password . "'";
+    $result = mysqli_query($conn, $query);
+
+    while($row = mysqli_fetch_assoc($result)){
+        echo $row['ID'];
+    }
 }
 function checkUser($conn, $email, $password){
     $query = "Select * from tblusers where email='" . $email. "' and password='" . $password . "'";
@@ -65,7 +107,6 @@ function products($conn){
             "category" => $row["category"]
         );
     }
-    //print_r($data);
     mysqli_close($conn);
     
     echo json_encode($data, JSON_PRETTY_PRINT);
