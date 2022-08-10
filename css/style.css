@@ -78,9 +78,8 @@ input:focus {
     padding-bottom: 0px;
 }
 .product-img{
-    margin-top: -53px;
+    border-radius: 5px;
     width: 100%;
-    padding: 10px;
 }
 .product-btns{
     border-radius: 10px;
@@ -89,7 +88,6 @@ input:focus {
     z-index: 999;
 }
 .product-btn-item{
-    padding: 10px;
     background-color: #e2e2e2;
     border-radius: 5px;
     cursor: pointer;
