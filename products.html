@@ -25,7 +25,7 @@
 
   <body>
     <!-- Nav bar -->
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="./index.html">Ennea's Apparel Shop</a>
         <button
@@ -44,7 +44,12 @@
             <div class="nav-items item-center">
               <li class="nav-item me-1">
                 <a class="nav-link" aria-current="page" href="#">
-                  <input type="search" placeholder="Search items" />
+                  <input type="search" placeholder="Search items" 
+                  id="search-box" autocomplete="off" 
+                  onfocus="showSearchContainer(this)" 
+                  onblur="hideSearchContainer()" 
+                  onkeyup="searchItem(this)">
+                  <i class="fa-solid fa-magnifying-glass"></i>
                   <i class="fa-solid fa-magnifying-glass"></i>
                 </a>
               </li>
@@ -55,13 +60,13 @@
                     class="position-relative bg-transparent"
                     style="border: none"
                   >
-                    <i class="fa-solid fa-cart-shopping"></i>
+                  <i class="fa-solid fa-cart-shopping cart-icon"></i>
                     <span
                       id="cart-badge"
                       class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"
                     ></span>
                   </button>
-                  <span class="badge text-dark cart-value">$100</span>
+                  <span class="badge cart-value">0</span>
                 </a>
               </li>
               <li class="nav-item">
@@ -69,8 +74,8 @@
                   >Log in</a
                 >
               </li>
-              <li class="nav-item nav-item d-flex align-items-center p-1">
-                <i class="" href="#">|</i>
+              <li class="nav-item nav-item d-flex align-items-center p-1 text-light">
+                <span class="">|</span>
               </li>
               <li class="nav-item">
                 <a class="nav-link ps-3 pe-3" href="./getStarted.html"
@@ -199,6 +204,15 @@
           ></i>
           Item Added</span
         >
+      </div>
+    </div>
+
+    <div class="search-container">
+      <p class="" style="font-size: 13px">Search Result</p>
+      <hr style="margin-top: -10px">
+
+      <div class="results">
+          <p class="text-center"><i>Try dress...</i></p>
       </div>
     </div>
 

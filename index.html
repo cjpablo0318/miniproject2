@@ -15,7 +15,7 @@
 <body>
 
     <!-- Nav bar -->
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-expand-lg" >
         <div class="container">
           <a class="navbar-brand" href="./index.html">Ennea's Apparel Shop</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -26,28 +26,32 @@
                 <div class="nav-items item-center">
                     <li class="nav-item me-1">
                         <a class="nav-link" aria-current="page" href="#">
-                            <input type="search" placeholder="Search items">
+                            <input type="search" placeholder="Search items" 
+                            id="search-box" autocomplete="off" 
+                            onfocus="showSearchContainer(this)" 
+                            onblur="hideSearchContainer()" 
+                            onkeyup="searchItem(this)">
                             <i class="fa-solid fa-magnifying-glass"></i>
                         </a>
-                      </li>
-                      <li class="nav-item">
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link position-relative" href="./mycart.html">
                             <button type="button" class="position-relative bg-transparent" style="border:none">
                                 <i class="fa-solid fa-cart-shopping cart-icon"></i>
                                 <span id="cart-badge" class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"></span>
                             </button>
-                            <span class="badge cart-value">$100</span>
+                            <span class="badge cart-value">0</span>
                         </a>
-                      </li>
-                      <li class="nav-item">
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link ps-3 pe-3" href="./getStarted.html">Log in</a>
-                      </li>
-                      <li class="nav-item nav-item d-flex align-items-center p-1">
-                        <i class="" href="#" >|</i>
-                      </li>
-                      <li class="nav-item">
+                    </li>
+                    <li class="nav-item nav-item d-flex align-items-center p-1 text-light">
+                        <span class="">|</span>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link ps-3 pe-3" href="./getStarted.html">Register</a>
-                      </li>
+                    </li>
                 </div>
               
             </ul>
@@ -55,9 +59,9 @@
         </div>
     </nav>
 
-    <section class="video mt-2">
-        <div class="container-fluid">
-            <video  autoplay muted loop>
+    <section class="video mt-2" >
+        <div class="container-fluid" >
+            <video  autoplay muted loop style="border-radius: 5px;">
                 <source src="./video/ennea_AdobeExpress.webm" type="video/mp4">
             </video>
             <div class="row">
@@ -78,11 +82,11 @@
             </div>
             <div class="row my-5">
                 <h5><strong>Featured</strong><span style="background-color: red; color: white; padding: 5px; padding-left: 10px; padding-right: 10px; margin-left: 5px; border-radius: 20px; font-size: 15px;">NEW</span><span class="float-end" style="font-size: 15px;"><a href="./products.html" style="text-decoration: none;color: green">View All</a></span></h5>
-                <div class="row carousel" data-flickity='{ "groupCells": true }' id="newProducts">
+                <div class="row carousel ms-1" data-flickity='{ "groupCells": true }' id="newProducts">
                     
                 </div>
             </div>
-            <div class="row mt-5 mb-5 best-offer-container">
+            <div class="row mt-5 mb-5 best-offer-container" style="border-radius: 5px;">
                 <div class="row ms-1 ps-1 my-1"><h6><strong>Best offer</strong></h1></div>
                 <div class="row">
                     <div class="col-md-3 col-sm-12  item-center">
@@ -90,7 +94,7 @@
                     </div>
                     <div class="col">
                         <div class="row">
-                            <h4 class="" id="best-title">Title of the products</h5>
+                            <h4 class="" id="best-title"></h5>
                         </div>
                         <div class="row product-specific-quantity">
                             <div class="col-6 d-flex align-items-center product-specific-quantity">
@@ -102,7 +106,7 @@
                                 <span class="product-specific-label">Price</span>
                                 <div class="row mt-1">
                                     <div class="col">
-                                        <span style="font-size: 25px; color: #0B9444;;" id="best-price">₱ 500</span> 
+                                        <span style="font-size: 25px; color: #0B9444;;" id="best-price">0</span> 
                                     </div>
                                 </div>
                             </div>
@@ -117,26 +121,26 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4 order-details">
-                                <a href="" id="best-link"><button class="pt-2 pb-2 add-to-cart mt-3 mb-3 w-100">Add to cart</button></a>
+                                <button class="pt-2 pb-2 add-to-cart mt-3 mb-3 w-100" style="color: green" id="best-link">Add to cart</button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="row promotion-container mt-4 mb-4">
+            <div class="row promotion-container mt-4 mb-4" style="border-radius: 5px;">
                 <div class="col-3 d-none">
                     <img src="./img/—Pngtree—white t-shirt_2005822.png" alt="">
                 </div>
                 <div class="col item-center">
                     <h1>Sale up to </h1>
                     <h1 style="margin-left: 10px"> <strong> 30% off</strong></h1>
-                    <button>shop now</button>
+                    <a href="./products.html"><button>Buy Now</button></a>
                 </div>
             </div>
             <div class="row my-5">
                 <h5><strong>Featured Products</strong><span class="float-end" style="font-size: 15px;"><a href="./products.html" style="text-decoration: none;color: green">View All</a></span></h5>
-                <div class="row" id="todaysDeal">
+                <div class="row ms-1" id="todaysDeal">
                     
                 </div>
             </div>
@@ -173,6 +177,15 @@
         data-bs-autohide="true">
         <div class="toast-body" style="color: green;">
             <span> <i class="fa-solid fa-circle-check" style="font-size: 20px; padding: 10px; color: green"></i> Item Added</span>
+        </div>
+    </div>
+
+    <div class="search-container">
+        <p class="" style="font-size: 13px">Search Result</p>
+        <hr style="margin-top: -10px">
+
+        <div class="results">
+            <p class="text-center"><i>Try dress...</i></p>
         </div>
     </div>
         

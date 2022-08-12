@@ -9,17 +9,23 @@ body {
     font-family: 'Rubik', sans-serif;
 }
 /* navbar */
+nav{
+    background-color: rgb(73, 131, 71)
+}
 .nav-items{
     padding: 5px;
 }
 .nav-items a{
-    color: black;
+    color: white;
     padding: 7px;
     border-radius: 20px;
     cursor: pointer;
 }
+.cart-icon{
+    color: white
+}
 .cart-value{
-    color: black
+    color: white
 }
 .nav-items a:hover{
     color: #0B9444;
@@ -32,6 +38,7 @@ body {
     color: #0B9444;
 }
 .nav-link{
+    color: white;
     font-size: 15px;
 }
 .nav-active{
@@ -43,6 +50,7 @@ body {
     padding: 2px;
     padding-left: 10px;
 }
+
 input{
     padding: 2px;
     padding-left: 10px;
@@ -112,7 +120,7 @@ input:focus {
     display: inline;
     text-overflow: ellipsis;
     display: -webkit-box;
-    -webkit-line-clamp: 2;
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
 }
 .product-label-light{
@@ -287,9 +295,6 @@ input:focus{
     border-radius: 5px;
 }
 
-
-
-
 /* Check out */
 .title{
     text-align: center;
@@ -400,18 +405,19 @@ form input{
 }
 .my-cart{
     margin-top: 10px;
-    background-color:rgb(243, 243, 243); 
     padding: 7px;
     border-radius: 10px;
     box-shadow: -1px 0px 5px -1px rgba(239, 239, 239, 0.63);
     -webkit-box-shadow: -1px 0px 5px -1px rgba(239, 239, 239, 0.63);
     -moz-box-shadow: -1px 0px 5px -1px rgba(239, 239, 239, 0.63);
 }
+.my-cart:hover{
+    background-color:rgb(243, 243, 243); 
+}
 .my-cart img{
     width: 90px;
-    padding: 7px;
+    height: 90px;
     border-radius: 10px;
-    border: 1px solid rgb(225, 225, 225);
 }
 .my-cart a{
     text-decoration: none;
@@ -456,8 +462,19 @@ form input{
 .price-value{
     color: #0B9444;;
 }
-
-
+.empty-cart{
+    padding: 20px;
+    padding-left: 30px;
+    padding-right: 30px;
+    cursor: pointer;
+    border: 1px solid rgb(237, 237, 237);
+    color: gray;
+    border-radius: 10px
+}
+.empty-cart:hover{
+    background-color: rgb(237, 237, 237);
+    color: green
+}
 
 button{
     border-radius: 30px;
@@ -590,7 +607,7 @@ video{
 }
 .sidebar-container{
     padding: 10px;
-    background-color: rgb(230, 230, 230);
+    background-color: #f9f9f9;
     border-radius: 10px;
 }
 .sidebar-container .item{
@@ -715,6 +732,21 @@ footer{
     background-color: gray;
     border-radius: 20px;
 }
+
+/* search */
+.search-container{
+    position: absolute;
+    height: auto;
+    width: 200px;
+    background-color: white;
+    display: none;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: -1px 3px 8px -3px rgba(91, 91, 91, 0.99);
+    -webkit-box-shadow: -1px 3px 8px -3px rgba(111, 111, 111, 0.99);
+    -moz-box-shadow: -1px 3px 8px -3px rgba(104, 104, 104, 0.99);
+}
+
       
 @media (max-width:500px) {
     .footer-menu ul{
@@ -728,3 +760,21 @@ footer{
         display: none;
     }
 }
+
+
+/* width */
+::-webkit-scrollbar {
+    width: auto;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    width: 10px;
+    background: rgba(3, 119, 32, 0.475);
+    border-radius: 10px;
+  }
