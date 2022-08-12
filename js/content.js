@@ -190,14 +190,14 @@ getProductDetails = (details) =>{
     let addCart = document.querySelector('.add-to-cart');
 
     if(checkCart(details.item_id)){
-        addCart.innerHTML = "View cart";
+        addCart.innerHTML = '<i class="fa-solid fa-circle-check" style="color: green"></i> View cart';
     }else{
-        addCart.innerHTML = "Add to cart";
+        addCart.innerHTML = '<i class="fa-solid fa-cart-plus"></i> Add to Cart';
     }
 
     addCart.onclick = function(){
-        addCart.innerHTML = "View cart"; 
-        addToCart(details.item_id, counter);
+        addCart.innerHTML = '<i class="fa-solid fa-circle-check" style="color: green"></i> View cart';
+        addToCart(details.item_id, counter, this);
     }
 
     let buyNowBtn = document.getElementById('product-specific-buyNow');
@@ -231,22 +231,19 @@ getTotalPrice = (price) =>{
 //getting the category list
 getCategories = () =>{
     let categoryList = ['Men', 'Women', 'Kids', 'Swim', 'Outerwear', 'Home'];
-    let images = ['https://esprit.scene7.com/is/image/esprit/992EE2K306_455_48?$SFCC_L$'];
     for(let i = 0; i < categoryList.length; i++){
         let category = '' +
         '<div class="col-lg-2 col-sm-3">' + 
-            '<div class="category-container">' + 
-                '<div class="row item-center py-3">' + 
-                    // '<img src="' + images[0]  + '" alt="" class="img-fluid">' + 
-                '</div>' + 
-                '<div class="row item-center pb-4" style="margin-top: -10px"><strong class="text-center">' + categoryList[i] +
+            '<a href="./products.html" style="text-decoration: none; color: black"><div class="category-container">' + 
+                '<div class="row item-center pb-4" style="margin-top: 19px;"><strong class="text-center">' + categoryList[i] +
                 '</strong></div>' + 
-            '</div>' + 
+            '</div></a>' + 
         '</div>';
         categories.innerHTML += category;
     }
    
 }
+
 //random products as best offer
 getBestOffer = (details) =>{
     const bestImg = document.getElementById('best-img');
@@ -284,14 +281,14 @@ getBestOffer = (details) =>{
 
     //create a function to save to cart
     if(!checkCart(details.item_id)){
-        bestLink.children[0].innerHTML = "Add to cart";
+        bestLink.innerHTML = '<i class="fa-solid fa-cart-plus"></i> Add to Cart';
         bestLink.onclick = function() {
-            addToCart(details.item_id, counter);
+            addToCart(details.item_id, counter, this);
         }
     }else{
-        bestLink.children[0].innerHTML = "View cart";
+        bestLink.innerHTML = '<i class="fa-solid fa-circle-check" style="color: green"></i> View cart';
         bestLink.onclick = function() {
-            bestLink.href = './mycart.html';
+            addToCart(details.item_id, counter, this);
         }
     }
 
@@ -319,7 +316,7 @@ logIn = () => {
         result += ' <div class="container">' +
                 '<div class="row item-center">' +
                     '<div class="col-lg-6 col-sm-12 content-container">' +
-                        '<h3 class="item-center"><strong>Welcome back</strong></h3>' +
+                        '<h3 class="item-center" style="color: green"><strong>Welcome back</strong></h3>' +
                         '<p class="item-center">Log in to your account</p>' +
                         '<div class="row item-center mt-5">' +
                             '<div class="col-3 social-container item-center">' +
@@ -383,7 +380,7 @@ signUp = () =>{
         result += ' <div class="container">' +
         '<div class="row item-center">' +
             '<div class="col-lg-6 col-sm-12 content-container">' +
-                '<h3 class="item-center"><strong>Get Started</strong></h3>' +
+                '<h3 class="item-center" style="color: green"><strong>Get Started</strong></h3>' +
                 '<p class="item-center">Create your account</p>' +
                 '<div class="row item-center mt-5">' +
                     '<div class="col-3 social-container item-center">' +
@@ -410,7 +407,7 @@ signUp = () =>{
                 '</div>' +
                 '<div class="row mt-3 mb-5 item-center">' +
                     '<div class="col-8">' +
-                        '<form action="./php/ennea.api.php" method="post" class="">' +
+                        '<form action="" method="post" class="">' +
                             '<div>' +
                                 '<label for="name">Display name</label>' +
                                 '<input type="text" id="name" name="name">' +
@@ -466,7 +463,6 @@ signUp();
 loggedInUserID = () =>{
     return loadFromLocal('userId');
 }
-
 
 //adding to cart function
 loadCart = () =>{
@@ -582,10 +578,10 @@ cartList = () =>{
     cart.innerHTML = "";
 
     if(cartListFromLocal == ''){
-        cart.innerHTML = '<p class="lead p-5 text-center">Add some product</p>';
+        cart.innerHTML = '<div class="item-center my-5"><a href="./products.html" style="text-decoration: none; color: black"><div class="empty-cart text-center"><span><i class="fa-solid fa-cart-plus" style="font-size:40px"></i></span><br><span style="font-size: 14px">Add item/s </span></div></a></div>';
     }
 
-    for(let i = 0; i < cartListFromLocal.length; i++){
+    for(let i = cartListFromLocal.length - 1; i >= 0; i--){
         cart.innerHTML += '<div class="row my-cart" >' +
         '<div class="col-md-6 d-flex">' +
             '<div class="row">' +
@@ -606,10 +602,9 @@ cartList = () =>{
             '</div>' +
         '</div>' +
         '<div class="col d-flex my-cart-variation product-specific-variant">' +
-            '<label class="">variation</label>' +
-            '<div class = "my-cart-variation-btn" style="margin-left: 3px; margin-top: -5px">' +
-                '<button class="">blue</button>' +
-                '<button class="">XL</button>' +
+            '<label class="" style="font-size: 15px">Color/Size: </label>' +
+            '<div class = "" style="margin-left: 3px; margin-top: 0px; font-size: 14px">' +
+                ' <span>Blue / L</span>'+
             '</div>' +
         '</div>' +
         '<div class="col text-end">' +
@@ -666,7 +661,7 @@ getOrders = () =>{
         }
     }
     console.log(cartList);
-    for(let i = 0; i < cartList.length; i++){
+    for(let i = cartList.length-1; i >=0 ; i--){
         order.innerHTML += '' +
         '<div class="row order-details-item">' +
         '<div class="col-9">' +
@@ -763,6 +758,77 @@ quantityEditor = () =>{
         }
     });
 }
+
+
+//search function
+let containerWidth = 0;
+showSearchContainer = (element) =>{
+    let container = document.querySelector(".search-container");
+    let offset = getOffset(element);
+    container.style.display = "block";
+    container.style.left = parseInt(offset.left - 15) + "px";
+    container.style.top = parseInt(offset.top + 40) + "px";
+
+    if(containerWidth == 0){
+        containerWidth = parseInt(container.offsetWidth + 50);
+    }
+    container.style.width = containerWidth + "px";
+
+}
+getOffset = (el) => {
+    const rect = el.getBoundingClientRect();
+    return {
+      left: rect.left + window.scrollX,
+      top: rect.top + window.scrollY
+    };
+}
+
+hideSearchContainer = () =>{
+    let container = document.querySelector(".search-container");
+    setTimeout(() =>{
+        container.style.display = "none";
+        //container.style.width = container.offsetWidth + "px";
+    }, 500);
+}
+
+searchItem = (element) =>{
+    const products = loadFromLocal("products");
+    const container = document.querySelector(".search-container");
+    let result = document.querySelector('.results');
+    let value = element.value.trim();
+
+    result.innerHTML = "";
+
+    if(value == ""){
+        result.innerHTML = "<p class='text-center'><i>Try dress...</i></p>";
+        return;
+    }
+
+    let ul = document.createElement('ul');
+    let isResult = false;
+
+    products.data.forEach(function (product) {
+        if(product.main_title.toLowerCase().indexOf(value.toLowerCase()) > -1){
+            let li = document.createElement('li');
+            let link = "./productDetails.html?id=" + parseInt(product.item_id);
+            console.log(link);
+            li.innerHTML = "<a href='" + link + "' style='text-decoration: none; color: green'>" +product.main_title + "</a>";
+            ul.appendChild(li);
+            isResult = true;
+
+            console.log(product.item_id);
+        }
+    });
+
+    result.appendChild(ul);
+
+    if(!isResult){
+        result.innerHTML = "<p class='text-center'>'<b>" + value + "</b>'" + " not found </p>";
+    }
+
+    console.log(products);
+}
+
 //waiting for data
 apiResponse = async (url) =>{
     let options = {};
@@ -840,7 +906,7 @@ apiCall = async () =>{
 
     if(todaysDeal != null){
         newProducts.innerHTML = "";
-        for(let i = featuredProducts.data.length-1; i >= parseInt((featuredProducts.data.length - 1) - 9); i--){
+        for(let i = featuredProducts.data.length-1; i >= parseInt((featuredProducts.data.length - 1) - 3); i--){
             console.log(featuredProducts.data[i]);
             newProducts.innerHTML += getProduct(featuredProducts.data[i]);
         }

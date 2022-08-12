@@ -19,7 +19,7 @@
   </head>
   <body>
     <!-- Nav bar -->
-    <nav class="navbar navbar-expand-lg bg-light">
+    <nav class="navbar navbar-expand-lg">
       <div class="container">
         <a class="navbar-brand" href="./index.html">Ennea's Apparel Shop</a>
         <button
@@ -38,7 +38,12 @@
             <div class="nav-items item-center">
               <li class="nav-item me-1">
                 <a class="nav-link" aria-current="page" href="#">
-                  <input type="search" placeholder="Search items" />
+                  <input type="search" placeholder="Search items" 
+                  id="search-box" autocomplete="off" 
+                  onfocus="showSearchContainer(this)" 
+                  onblur="hideSearchContainer()" 
+                  onkeyup="searchItem(this)">
+                  <i class="fa-solid fa-magnifying-glass"></i>
                   <i class="fa-solid fa-magnifying-glass"></i>
                 </a>
               </li>
@@ -49,13 +54,13 @@
                     class="position-relative bg-transparent"
                     style="border: none"
                   >
-                    <i class="fa-solid fa-cart-shopping"></i>
+                  <i class="fa-solid fa-cart-shopping cart-icon"></i>
                     <span
                       id="cart-badge"
                       class="position-absolute top-0 start-100 translate-middle p-1 bg-danger border border-light rounded-circle"
                     ></span>
                   </button>
-                  <span class="badge text-dark cart-value">$100</span>
+                  <span class="badge cart-value">0</span>
                 </a>
               </li>
               <li class="nav-item">
@@ -63,8 +68,8 @@
                   >Log in</a
                 >
               </li>
-              <li class="nav-item nav-item d-flex align-items-center p-1">
-                <i class="" href="#">|</i>
+              <li class="nav-item nav-item d-flex align-items-center p-1 text-light">
+                <span class="">|</span>
               </li>
               <li class="nav-item">
                 <a class="nav-link ps-3 pe-3" href="./getStarted.html"
@@ -77,11 +82,11 @@
       </div>
     </nav>
 
-    <section class="content mt-4 mb-5">
+    <section class="content mt-5 mb-5">
       <div class="container px-5 g-0">
         <div class="row d-flex">
           <div class="col d-flex justify-content-start align-items-center">
-            <span class="fs-4 me-2"><strong>My Cart</strong></span>
+            <span class="fs-4 me-2"><strong>Your shopping cart</strong></span>
             <span
               class="badge rounded-pill product-specific-brand"
               style="font-size: 12px"
@@ -91,6 +96,10 @@
           <div class="col">
             <button class="btn-delete-all float-end">Empty Cart</button>
           </div>
+        </div>
+        <div class="row mt-2 mb-4">
+          <span style="font-size: 15
+          +px;">ID: 2022-0088-2341</span>
         </div>
         <div class="row" id="cart-list"></div>
         <div class="row" style="margin-top: 80px">
@@ -127,7 +136,13 @@
           <hr style="border: 1px solid rgb(239, 239, 239)" />
           <h5 class="">Favorites</h5>
           <div class="row" id="favorites">
-            <p class="lead p-5 text-center">Nothing found</p>
+            <div class="item-center my-5">
+              <a href="./products.html" style="text-decoration: none; color: black">
+                <div class="empty-cart text-center"><span><i class="fa-solid fa-cart-plus" style="font-size:40px"></i></span>
+                  <br><span style="font-size: 14px">Add item/s </span>
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -187,6 +202,14 @@
           ></i>
           Item Added</span
         >
+      </div>
+    </div>
+    <div class="search-container">
+      <p class="" style="font-size: 13px">Search Result</p>
+      <hr style="margin-top: -10px">
+
+      <div class="results">
+          <p class="text-center"><i>Try dress...</i></p>
       </div>
     </div>
 
