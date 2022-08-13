@@ -222,8 +222,8 @@ input:focus{
     font-size: 13px;
 }
 .product-specific-quantity button:hover{
-    background-color: rgb(9, 144, 9);
-    color: white;
+    border-color: rgb(9, 144, 9);
+    color: rgb(9, 144, 9);
     cursor: pointer;
 }
 .product-specific-variant{
@@ -407,9 +407,9 @@ form input{
     margin-top: 10px;
     padding: 7px;
     border-radius: 10px;
-    box-shadow: -1px 0px 5px -1px rgba(239, 239, 239, 0.63);
-    -webkit-box-shadow: -1px 0px 5px -1px rgba(239, 239, 239, 0.63);
-    -moz-box-shadow: -1px 0px 5px -1px rgba(239, 239, 239, 0.63);
+    box-shadow: -1px 3px 8px -3px rgba(91, 91, 91, 0.99);
+    -webkit-box-shadow: -1px 3px 8px -3px rgba(111, 111, 111, 0.99);
+    -moz-box-shadow: -1px 3px 8px -3px rgba(104, 104, 104, 0.99);
 }
 .my-cart:hover{
     background-color:rgb(243, 243, 243); 
@@ -737,7 +737,9 @@ footer{
 .search-container{
     position: absolute;
     height: auto;
+    max-height: 400px;
     width: 200px;
+    overflow: scroll;
     background-color: white;
     display: none;
     border-radius: 10px;
