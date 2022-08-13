@@ -521,11 +521,11 @@ addToCart = (id, quantity, element = null) => {
         setTimeout(() => {
             element.innerHTML = '<i class="fa-solid fa-circle-check" style="color: green"></i> View cart';
             bsAlert.show();
-        }, 1500);
+        }, 1000);
 
         setTimeout(() => {
             bsAlert.hide();
-        }, 3000);
+        }, 900);
    }
 
     if(cartListFromLocal != ''){
@@ -553,9 +553,11 @@ addToCart = (id, quantity, element = null) => {
             }
         }
     }
+    
     //save item to cart
     saveToLocal('cart', cartListFromLocal);
     loadCart();
+
 }
 checkCart = (id) =>{
     let cartListFromLocal = loadFromLocal('cart');

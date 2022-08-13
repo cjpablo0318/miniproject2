@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";
 $password = "";
-$dbName = "dbennia";
+$dbName = "dbennea";
 
 $conn = mysqli_connect($servername, $username, $password);
 
@@ -51,6 +51,5 @@ $sql = "CREATE TABLE IF NOT EXISTS `tblusers` (
     if (!mysqli_query($conn, $sql)) {
       echo "Error creating table: " . mysqli_error($conn);
     }
-    
   $conn = mysqli_connect($servername, $username, $password, $dbName);
 ?>
