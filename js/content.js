@@ -301,24 +301,155 @@ saveToLocal = (key, value) =>{
 }
 //getting data from the local storage
 loadFromLocal = (key) => {
-    let result = localStorage[key]  || "";
+    let result = localStorage[key]  || '';
     if(result == ""){
         return "";
     }
     return JSON.parse(result);
 }
 
-//log in
+//GetStarted
 let getStarted = document.getElementById("getStartedContent");
-logIn = () => {
+loggedInUserID = () =>{
+    let userID = loadFromLocal('userLoggedIn') ? loadFromLocal('userLoggedIn').userID : -1;
+    saveToLocal('cart', []);
+    if(userID > -1){
+        let user = loadFromLocal('users')[userID];
+        let orderCount = document.querySelector('.orderCount');
+        let cartCount = document.querySelector('.cartCount');
+        let profileName = document.querySelector('.profile-name');
+
+        profileName.innerHTML = user.name.charAt(0).toUpperCase() + user.name.slice(1);
+        orderCount.innerHTML = "(" + user.orders + ")";
+        cartCount.innerHTML = "(" + user.cart.length + ")";
+
+        console.log(user);
+        if(user.cart != null){
+            saveToLocal('cart', user.cart);
+        }
+    }
+    return userID;
+}
+logOut = () =>{
+    saveToLocal('userLoggedIn', "");
+    location.replace("./getStarted.html");
+}
+showError = (message)=>{
+    let alertErr = document.querySelector('.alert');
+    if(alertErr == null){
+        return;
+    }
+
+    alertErr.innerHTML = message;
+    alertErr.classList.remove('d-none');
+    setTimeout(()=>{
+        alertErr.classList.add('d-none');
+    }, 5000);
+}
+
+validateInput =(name, email, pass, cpass)=>{
+    if(name.trim().length == 0 || email.trim().length == 0 || pass.trim().length == 0 || cpass.trim().length == 0) {
+        showError("Required field is/are missing!");
+        return false;
+    }
+
+    if(name.trim().length < 4){
+        showError("Name must be at least 4 characters!");
+        return false;
+    }
+    const pattern = new RegExp("^(((?=.*[a-z])(?=.*[A-Z]))|((?=.*[a-z])(?=.*[0-9]))|((?=.*[A-Z])(?=.*[0-9])))(?=.{6,})");
+    if(pattern.test(pass) == false || pattern.test(cpass) == false){
+        showError("Password must contains at least 6 characters, including UPPERCASE/lowercase and numbers");
+        return false;
+    }
+
+    if (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email) == false){
+        showError("You have entered an invalid email address!");
+        return false;
+    }
+
+    if(pass != cpass){
+        showError("Password mismatch");
+        return false;
+    }
+    return true;
+}
+
+checkUser =(email, password)=>{
+    let users = loadFromLocal('users') || [];
+    if(users.length < 1){
+        return -1;
+    }
+
+    for(let i = 0; i < users.length; i++) {
+        if(users[i].email === email && users[i].password === password){
+            return i;
+        }
+    }
+    return -1;
+}
+logIn = () =>{
+    let email = document.getElementById('email').value;
+    let pass = document.getElementById('password').value;
+
+    if(email.trim().length <= 0 || pass.trim().length <= 0){
+        showError('Required field is/are missing!');
+        return;
+    }
+    
+    if(checkUser(email, pass) > -1){
+        saveToLocal('userLoggedIn', {'userID' : checkUser(email, pass)});
+        location.replace("./index.html");
+        return;
+    }
+    showError("User not found");
+}
+
+signUp = () =>{
+    let name = document.getElementById('name').value;
+    let email = document.getElementById('email').value;
+    let pass = document.getElementById('password').value;
+    let cpass = document.getElementById('cpassword').value;
+
+    if(!validateInput(name, email, pass, cpass)){
+        return;
+    }
+
+    let newUser = {
+        "name": name,
+        "email": email,
+        "password": pass,
+        "email": email,
+        "cart" : [],
+        "orders": 0
+    };
+
+    let users = loadFromLocal('users') || [];
+
+    users[users.length] = newUser;
+
+    alert(checkUser(email, pass));
+
+    if(checkUser(email, pass) > -1){
+        showError("Email already exist!");
+        return;
+    }
+    
+    saveToLocal("users", users);
+    saveToLocal('userLoggedIn', {'userID' : checkUser(email, pass)});
+    location.replace("./index.html");
+
+}
+
+logInForm = () => {
     if(getStarted != null){
         let result = '';
-        result += ' <div class="container">' +
+        result += ' <div class="container mt-5">' +
                 '<div class="row item-center">' +
                     '<div class="col-lg-6 col-sm-12 content-container">' +
                         '<h3 class="item-center" style="color: green"><strong>Welcome back</strong></h3>' +
                         '<p class="item-center">Log in to your account</p>' +
-                        '<div class="row item-center mt-5">' +
+                        '<div class="row item-center mt-5 d-none">' +
                             '<div class="col-3 social-container item-center">' +
                                '<button class="d-flex item-center">' +
                                 '<i class="fa-brands fa-facebook-square pe-2" style="color: blue"></i>' +
@@ -338,19 +469,21 @@ logIn = () => {
                                 '</button>'+ 
                              '</div>' +
                         '</div>' +
-                        '<div class="row mt-3">' +
+                        '<div class="row mt-3 d-none">' +
                             '<p class="item-center">or</p>' +
                         '</div>' +
-                        '<div class="row mt-3 mb-5 item-center">' +
+                        '<div class="row mt-5 mb-5 item-center">' +
                             '<div class="col-8">' +
-                                '<form action="./php/ennea.api.php" class="" method="post">' +
+                                '<div class="form">' +
+                                    '<div class="alert alert-danger d-none p-2 my-3" style="font-size: 14px" role="alert">' +
+                                    '</div>' +
                                     '<div>' +
                                         '<label for="email">Email/phone number</label>' +
-                                        '<input type="text" id="email" name="username">' +
+                                        '<input type="text" id="email" name="username" required>' +
                                     '</div>' +
                                     '<div class="mt-3">' +
                                         '<label for="password">Password</label>' +
-                                        '<input type="password" id="password" name="password">' +
+                                        '<input type="password" id="password" name="password" required>' +
                                     '</div>' +
                                     '<div class="d-flex mt-3">' +
                                         '<div class="col">' +
@@ -362,10 +495,10 @@ logIn = () => {
                                         '</div>' +
                                     '</div>' +
                                     '<div class="row mt-5">' +
-                                        '<button class="checkout py-2" name="login">Log in</button>' +
-                                        '<button class="cancel py-2 mt-3" onclick="signUp()">Sign up</button>'+ 
+                                        '<button class="checkout py-2" name="login" onClick="logIn()">Log in</button>' +
+                                        '<button class="cancel py-2 mt-3" onclick="signUpForm()">Sign up</button>'+ 
                                     '</div>' +
-                                '</form>' +
+                                '</div>' +
                             '</div>' +
                         '</div>' +
                     '</div>' +
@@ -374,7 +507,7 @@ logIn = () => {
         getStarted.innerHTML = result;
     }
 }
-signUp = () =>{
+signUpForm = () =>{
     if(getStarted != null){
         let result = '';
         result += ' <div class="container">' +
@@ -382,7 +515,7 @@ signUp = () =>{
             '<div class="col-lg-6 col-sm-12 content-container">' +
                 '<h3 class="item-center" style="color: green"><strong>Get Started</strong></h3>' +
                 '<p class="item-center">Create your account</p>' +
-                '<div class="row item-center mt-5">' +
+                '<div class="row item-center mt-5 d-none">' +
                     '<div class="col-3 social-container item-center">' +
                        '<button class="d-flex item-center">' +
                         '<i class="fa-brands fa-facebook-square pe-2" style="color: blue"></i>' +
@@ -402,34 +535,33 @@ signUp = () =>{
                         '</button>' +
                      '</div>' +
                 '</div>' +
-                '<div class="row mt-3">' +
+                '<div class="row mt-3 d-none">' +
                     '<p class="item-center">or</p>' +
                 '</div>' +
                 '<div class="row mt-3 mb-5 item-center">' +
                     '<div class="col-8">' +
-                        '<form action="" method="post" class="">' +
+                        '<div class="form">' +
+                            '<div class="alert alert-danger d-none p-2 my-3" style="font-size: 13px" role="alert">' +
+                            '</div>' +
                             '<div>' +
                                 '<label for="name">Display name</label>' +
-                                '<input type="text" id="name" name="name">' +
+                                '<input type="text" id="name" name="name" required>' +
                             '</div>' +
                             '<div class="mt-3">' +
                                 '<label for="password">Password</label>' +
-                                '<input type="password" id="password" name="password">' +
+                                '<input type="password" id="password" name="password" required>' +
                             '</div>' +
                             '<div class="mt-3">' +
                                 '<label for="cpassword">Confirm password</label>' +
-                                '<input type="password" id="cpassword" name="cpassword">' +
+                                '<input type="password" id="cpassword" name="cpassword" required>' +
                             '</div>' +
-                            '<div class="mt-3 d-flex align-items-end">' +
-                                '<div class="col-10">' +
-                                    '<label for="number">Phone number</label>' +
-                                    '<input type="number" id="number" name="number">' +
-                                '</div>' +
-                                '<div class="col d-flex justify-content-end">' +
-                                    '<button class="btn-send-code">send</button>' +
-                                '</div>' +
+                            '<div class="mt-3 mb-5 d-flex align-items-end">' +
+                                '<div class="col">' +
+                                    '<label for="email">Email Address</label>' +
+                                    '<input type="email" id="email" name="email" required>' +
+                                '</div>'+
                             '</div>' +
-                            '<div class=" mt-5 mb-5 code text-center" id="code">' +
+                            '<div class=" mt-5 mb-5 code text-center d-none" id="code">' +
                                 '<p style="font-size: 14px">Enter code sent to +6300000000</p>' +
                                 '<div class="item-center">' +
                                     '<input type="text"/>' +
@@ -443,10 +575,10 @@ signUp = () =>{
                                 '<p style="font-size: 14px">By creating an account, you agree to the Terms and condition and Privacy Policy of the app.</p>' +
                             '</div>' +
                             '<div class="row mt-5">' +
-                            '<button type="submit" class="checkout py-2" name="signUp">Sign up</button>' +
-                            '<button class="cancel py-2 mt-3" onclick="logIn();">Log in</button>' +
+                            '<button class="checkout py-2" name="signUp" onClick="signUp()">Sign up</button>' +
+                            '<button class="cancel py-2 mt-3" onclick="logInForm();">Log in</button>' +
                         '</div>' +
-                        '</form>' +
+                        '</div>' +
                     '</div>' +
                 '</div>' +
             '</div>' +
@@ -458,17 +590,18 @@ signUp = () =>{
     }
 }
 
-signUp();
-
-loggedInUserID = () =>{
-    return loadFromLocal('userId');
-}
+signUpForm();
 
 //adding to cart function
 loadCart = () =>{
+    if(loggedInUserID() < 0){
+        return;
+    }
+
     let cartListFromLocal = loadFromLocal('cart');
     let cartBadge = document.getElementById('cart-badge');
     let cartValue = document.querySelectorAll('.cart-value');
+    cartBadge.style.display = 'none';
 
     if(cartListFromLocal != ''){
         cartBadge.style.display = 'block';
@@ -504,8 +637,9 @@ loadCart = () =>{
 }
 addToCart = (id, quantity, element = null) => {
     let cartListFromLocal = loadFromLocal('cart') || [];
-    if(loggedInUserID() != ''){
-        //save to database
+    if(loggedInUserID() < 0){
+        location.replace("./getStarted.html");
+        return;
     }
 
     if(checkCart(id)){
@@ -556,6 +690,14 @@ addToCart = (id, quantity, element = null) => {
     
     //save item to cart
     saveToLocal('cart', cartListFromLocal);
+    let users = loadFromLocal("users") || [];
+
+    for(let i = 0; i < users.length; i++){
+        if(i === loggedInUserID()){
+            users[i]['cart'] = cartListFromLocal;
+            saveToLocal('users', users);
+        }
+    }
     loadCart();
 
 }
@@ -631,6 +773,18 @@ cartList = () =>{
 
     document.querySelector('.btn-delete-all').onclick = function(){
         saveToLocal('cart', '');
+        let users = loadFromLocal('users') || [];
+            for(let i = 0; i < users.length; i++){
+                let user = users[i];
+                if(i === loggedInUserID()){
+                    user['cart'] = '';
+                }
+                users[i] = user;
+            }
+        
+            saveToLocal('users', users);
+            
+            console.log(users);
         location.replace("./mycart.html");
     }
 }
@@ -662,7 +816,6 @@ getOrders = () =>{
             }
         }
     }
-    console.log(cartList);
     for(let i = cartList.length-1; i >=0 ; i--){
         order.innerHTML += '' +
         '<div class="row order-details-item">' +
@@ -688,6 +841,17 @@ getOrders = () =>{
 
     document.getElementById('payment-received').onclick = function(){
         saveToLocal('cart', '');
+        let users = loadFromLocal('users') || [];
+            for(let i = 0; i < users.length; i++){
+                let user = users[i];
+                if(i === loggedInUserID()){
+                    user['cart'] = '';
+                    user['orders'] =  parseInt(user.orders) + parseInt(cartList.length)
+                }
+                users[i] = user;
+            }
+        
+            saveToLocal('users', users);
         location.replace("./index.html");
     }
 
@@ -710,8 +874,21 @@ quantityEditor = () =>{
 
             quantityContainer.innerText = quantityValue;
             cartListFromLocal[index].quantity = quantityValue;
+            console.log(cartListFromLocal);
             price[index].innerHTML = getTotalPrice(parseInt(cartListFromLocal[index].price * cartListFromLocal[index].quantity));
             saveToLocal('cart', cartListFromLocal);
+
+            let users = loadFromLocal('users') || [];
+            for(let i = 0; i < users.length; i++){
+                let user = users[i];
+                if(i === loggedInUserID()){
+                    user['cart'] = cartListFromLocal;
+                }
+                users[i] = user;
+            }
+        
+            saveToLocal('users', users);
+
             loadCart(); 
         }
     });
@@ -727,8 +904,21 @@ quantityEditor = () =>{
 
             quantityContainer.innerText = quantityValue;
             cartListFromLocal[index].quantity = quantityValue;
+            console.log(cartListFromLocal);
             price[index].innerHTML = getTotalPrice(parseInt(cartListFromLocal[index].price * cartListFromLocal[index].quantity));
             saveToLocal('cart', cartListFromLocal);
+
+            let users = loadFromLocal('users') || [];
+            for(let i = 0; i < users.length; i++){
+                let user = users[i];
+                if(i === loggedInUserID()){
+                    user['cart'] = cartListFromLocal;
+                }
+                users[i] = user;
+            }
+        
+            saveToLocal('users', users);
+
             loadCart();
         }
     });
@@ -746,7 +936,20 @@ quantityEditor = () =>{
                     newIndex++;
                 }
             }
-            saveToLocal('cart', newList);
+            //saveToLocal('cart', newList);
+
+            let users = loadFromLocal('users') || [];
+            for(let i = 0; i < users.length; i++){
+                let user = users[i];
+                if(i === loggedInUserID()){
+                    user['cart'] = newList;
+                }
+                users[i] = user;
+            }
+        
+            saveToLocal('users', users);
+            
+            console.log(users);
 
             if(cartListFromLocal.length == 1){
                 location.replace("./mycart.html");
@@ -760,7 +963,6 @@ quantityEditor = () =>{
         }
     });
 }
-
 
 //search function
 let containerWidth = 0;
@@ -831,6 +1033,33 @@ searchItem = (element) =>{
     console.log(products);
 }
 
+//profile function
+let isProfileContainerVisible = false;
+showProfileContainer =(element)=>{
+    let container = document.querySelector(".profile-container");
+    let offset = getOffset(element);
+
+    if(isProfileContainerVisible){
+        container.style.display = "none";
+    }else{
+        container.style.display = "block";
+    }
+    
+    container.style.left = parseInt(offset.left - 15) + "px";
+    container.style.top = parseInt(offset.top + 40) + "px";
+
+    if(containerWidth == 0){
+        containerWidth = parseInt(container.offsetWidth + 50);
+    }
+    container.style.width = containerWidth + "px";
+
+    let logout = document.querySelector('.logOut');
+    logout.onclick = function(){
+        logOut();
+    };
+
+    isProfileContainerVisible = !isProfileContainerVisible;
+}
 //waiting for data
 apiResponse = async (url) =>{
     let options = {};
@@ -867,6 +1096,31 @@ apiResponse = async (url) =>{
 //call each api
 apiCall = async () =>{
     //const today = new Date().getMonth() + 1 + "" + new Date().getDate() + "" + new Date().getFullYear();
+
+    //nav
+    //localStorage.clear();
+    if(loggedInUserID() > -1){
+        const navItems = document.querySelector('.nav-items');
+        for(let i = navItems.childElementCount-1; i >= navItems.childElementCount-3; i--){
+            navItems.children[i].classList.add('d-none');
+        }
+        let li = document.createElement("li")
+        let link = document.createElement('a');
+
+        li.classList.add('nav-item');
+        link.classList.add('nav-link', 'ps-3', 'pe-3');
+        link.innerHTML = "My Account";
+
+        link.onclick = function(){
+            showProfileContainer(this);
+        };
+
+        li.appendChild(link);
+
+        navItems.appendChild(li);
+    }
+
+
     let featuredProducts = loadFromLocal('products');
     //localStorage.clear();
 

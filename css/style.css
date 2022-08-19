@@ -319,10 +319,10 @@ input:focus{
     margin-left: 20px
 }
 
-form label{
+.form label{
     font-size: 13px;
 }
-form input{
+.form input{
     padding: 5px;
     padding-left: 10px;
     border-radius: 5px;
@@ -677,6 +677,8 @@ footer{
     border: 1px solid rgb(0, 0, 0);
     padding: 5px;
     border-radius: 50%;
+    color: rgb(220, 220, 220);
+    border: 1px solid rgb(220, 220, 220);
 }
 .socials a i{
     height: 90px;
@@ -684,12 +686,9 @@ footer{
     font-size: 17px;
     transition: color .4s ease;
 }
-.socials a:hover{
-    color: rgb(255, 255, 255);
-    border: 1px solid white;
-}
 
 .footer-bottom{
+    color: white;
     background: rgb(33, 82, 39);
     width: 100%;
     padding: 20px;
@@ -703,7 +702,7 @@ footer{
     text-transform: capitalize;
 }
 .footer-bottom p a{
-  color: rgb(212, 153, 26);
+    color: transparent;
   font-size: 16px;
   text-decoration: none;
 }
@@ -739,16 +738,36 @@ footer{
     height: auto;
     max-height: 400px;
     width: 200px;
-    overflow: scroll;
     background-color: white;
     display: none;
     border-radius: 10px;
     padding: 10px;
     box-shadow: -1px 3px 8px -3px rgba(91, 91, 91, 0.99);
     -webkit-box-shadow: -1px 3px 8px -3px rgba(111, 111, 111, 0.99);
-    -moz-box-shadow: -1px 3px 8px -3px rgba(104, 104, 104, 0.99);
+    -moz-box-shadow: -1px 3px 8px -3px rgba(237, 156, 156, 0.99);
 }
 
+/* profile container */
+.profile-container{
+    position: absolute;
+    width: 150px;
+    display: none;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: white;
+    box-shadow: -1px 3px 8px -3px rgba(91, 91, 91, 0.99);
+    -webkit-box-shadow: -1px 3px 8px -3px rgba(111, 111, 111, 0.99);
+    -moz-box-shadow: -1px 3px 8px -3px rgba(104, 104, 104, 0.99);
+}
+.profile-container ul{
+    margin-top: 9px;
+    list-style: none
+}
+
+.profile-img{
+    height: 70px; 
+    height: 70px;
+}
       
 @media (max-width:500px) {
     .footer-menu ul{
