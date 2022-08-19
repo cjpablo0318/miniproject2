@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.9.2
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Aug 19, 2022 at 03:26 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 7.4.29
+-- Host: 127.0.0.1:3306
+-- Generation Time: Jul 30, 2022 at 03:00 AM
+-- Server version: 10.4.10-MariaDB
+-- PHP Version: 7.3.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -18,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `dbennea`
+-- Database: `dbennia`
 --
 
 -- --------------------------------------------------------
@@ -27,15 +28,17 @@ SET time_zone = "+00:00";
 -- Table structure for table `tblproducts`
 --
 
-CREATE TABLE `tblproducts` (
-  `item_id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tblproducts`;
+CREATE TABLE IF NOT EXISTS `tblproducts` (
+  `item_id` int(11) NOT NULL AUTO_INCREMENT,
   `main_title` varchar(1000) NOT NULL,
   `img_url` varchar(1000) NOT NULL,
   `price` int(255) NOT NULL,
   `color` varchar(255) DEFAULT NULL,
   `sizes` varchar(255) DEFAULT NULL,
-  `category` int(10) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+  `category` int(10) DEFAULT NULL,
+  PRIMARY KEY (`item_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `tblproducts`
@@ -94,26 +97,6 @@ INSERT INTO `tblproducts` (`item_id`, `main_title`, `img_url`, `price`, `color`,
 (50, 'Baseball cap', 'https://esprit.scene7.com/is/image/esprit/042EA1P328_001_59?$SFCC_L$', 3250, NULL, NULL, 4),
 (51, 'Medium-sized duffle bag', 'https://esprit.scene7.com/is/image/esprit/042EA1O360_750_59?$SFCC_L$', 5690, NULL, NULL, 4),
 (52, 'Large duffle bag', 'https://esprit.scene7.com/is/image/esprit/042EA1O361_290_51?$SFCC_L$', 7690, NULL, NULL, 4);
-
---
--- Indexes for dumped tables
---
-
---
--- Indexes for table `tblproducts`
---
-ALTER TABLE `tblproducts`
-  ADD PRIMARY KEY (`item_id`);
-
---
--- AUTO_INCREMENT for dumped tables
---
-
---
--- AUTO_INCREMENT for table `tblproducts`
---
-ALTER TABLE `tblproducts`
-  MODIFY `item_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
