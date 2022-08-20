@@ -631,106 +631,196 @@ video{
     margin-right: 5px
 }
 
-/* Footer */
-footer{
-    background: rgb(73, 131, 71);
-    width: 100%;
-    padding-top: 40px;
-    color: #fff;
-}
-.footer-content{
-    height: auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    text-align: center;
-}
-.footer-content h3{
-    font-size: 2.1rem;
-    font-weight: 500;
-    text-transform: capitalize;
-    line-height: 3rem;
-}
-.footer-content p{
-    max-width: 500px;
-    margin: 10px auto;
-    line-height: 28px;
-    font-size: 14px;
-    color: #cacdd2;
-}
-.socials{
-    list-style: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 1rem 0 5rem 0;
-}
-.socials li{
-    margin: 0 10px;
-}
-.socials a{
-    height: 80px;
-    width: 80px;
+
+        
+.footer a {
+    font-size: 10px;
+    color: #333;
     text-decoration: none;
-    color: rgb(0, 0, 0);
-    border: 1px solid rgb(0, 0, 0);
-    padding: 5px;
-    border-radius: 50%;
-    color: rgb(220, 220, 220);
-    border: 1px solid rgb(220, 220, 220);
+    transition-timing-function: ease-in-out;
+    -ms-transition-timing-function: ease-in-out;
+    -moz-transition-timing-function: ease-in-out;
+    -webkit-transition-timing-function: ease-in-out;
+    -o-transition-timing-function: ease-in-out;
+    transition-duration: .2s;
+    -ms-transition-duration: .2s;
+    -moz-transition-duration: .2s;
+    -webkit-transition-duration: .2s;
+    -o-transition-duration: .2s;
 }
-.socials a i{
-    height: 90px;
-    width: 18px;
-    font-size: 17px;
-    transition: color .4s ease;
+        
+.footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.footer img {
+    max-width: 100%;
+    height: auto;
+}
+.footer {
+    background: #45965b;
+    padding-top: 50px;
+}
+/*END FOOTER SOCIAL DESIGN*/
+.single_footer{}
+@media only screen and (max-width:768px) { 
+.single_footer{margin-bottom:30px;}
+}
+.single_footer h4 {
+    color: #fff;
+    margin-top: 0;
+    margin-bottom: 25px;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 20px;
+}
+.single_footer h4::after {
+    content: "";
+    display: block;
+    height: 2px;
+    width: 40px;
+    background: #fff;
+    margin-top: 20px;
+}
+.single_footer p{color:#fff;}
+.single_footer ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.single_footer ul li{}
+.single_footer ul li a {
+    color: #fff;
+    line-height: 36px;
+    font-size: 15px;
+    text-transform: capitalize;
+}
+.single_footer ul li a:hover { color: #b8b8b8; }
+
+.single_footer_address{}
+.single_footer_address ul{}
+.single_footer_address ul li{color:#fff;}
+.single_footer_address ul li span {
+    font-weight: 400;
+    color: #fff;
+    line-height: 28px;
+}
+.contact_social ul {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
 }
 
-.footer-bottom{
-    color: white;
-    background: rgb(33, 82, 39);
+/*START NEWSLETTER CSS*/
+.subscribe {
+    display: block;
+    position: relative;
+    margin-top: 15px;
     width: 100%;
-    padding: 20px;
-    padding-bottom: 40px;
+}
+.subscribe__input {
+    background-color: #fff;
+    border: medium none;
+    border-radius: 35px;
+    color: #333;
+    display: block;
+    font-size: 15px;
+    font-weight: 100;
+    height: 40px;
+    letter-spacing: 0.4px;
+    margin: 0;
+    padding: 0 150px 0 20px;
+    text-align: center;
+    text-transform: capitalize;
+    width: 100%;
+}
+@media only screen and (max-width:768px) { 
+.subscribe__input{padding: 0 50px 0 20px;}
+}
+
+.subscribe__btn {
+    display: none;
+    background-color: transparent;
+    border-radius: 0 25px 25px 0;
+    color: #01c7e9;
+    cursor: pointer;
+    font-size: 15px;
+    height: 60px;
+    position: absolute;
+    right: 0;
+    top: -10px;
+    width: 60px;
+}
+.subscribe__btn i{transition: all 0.3s ease 0s;}
+@media only screen and (max-width:768px) { 
+.subscribe__btn{right:0px;}
+}
+
+.subscribe__btn:hover i{
+    color:#b8b8b8;
+}
+.footer button {
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    -webkit-border-radius: 0;
+    border-radius: 0;
+}
+/*END NEWSLETTER CSS*/
+
+/*START SOCIAL PROFILE CSS*/
+.social_profile {margin-top:40px;}
+.social_profile ul{
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+.social_profile ul li{float:left;}
+.social_profile ul li a {
+    text-align: center;
+    border: 0px;
+    text-transform: uppercase;
+    transition: all 0.3s ease 0s;
+    margin: 0px 5px;
+    font-size: 18px;
+    color: #fff;
+    border-radius: 30px;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    display: block;
+    border: 1px solid rgba(255,255,255,0.2);
+}
+@media only screen and (max-width:768px) { 
+.social_profile ul li a{margin-right:10px;margin-bottom:10px;}
+}
+@media only screen and (max-width:480px) { 
+.social_profile ul li a{
+    width:40px;
+    height:40px;
+    line-height:40px;
+}
+}
+.social_profile ul li a:hover{
+    background:#b8b8b8;
+    border: 1px solid #b8b8b8;
+    color:#fff;
+    border:0px;
+}
+/*END SOCIAL PROFILE CSS*/
+.copyright {
+    margin-top: 20px;
+    padding-top: 10px;
+    color:#fff;
+    font-size: 15px;
+    border-top: 1px solid rgba(255,255,255,0.4);
     text-align: center;
 }
-.footer-bottom p{
-    float: left;
-    font-size: 14px;
-    word-spacing: 2px;
-    text-transform: capitalize;
-}
-.footer-bottom p a{
-    color: transparent;
-  font-size: 16px;
-  text-decoration: none;
-}
-.footer-bottom span{
-    text-transform: uppercase;
-    opacity: .4;
-    font-weight: 200;
-}
-.footer-menu{
-  float: right;
-}
-.footer-menu ul{
-  display: flex;
-}
-.footer-menu ul li{
-    padding-right: 10px;
-    display: block;
-}
-.footer-menu ul li a{
-    font-size: 14px;
-    padding: 5px 10px;
-    color: #cfd2d6;
-    text-decoration: none;
-}
-.footer-menu ul li a:hover{
-    background-color: gray;
-    border-radius: 20px;
-}
+.copyright a{color:#01c7e9;transition: all 0.2s ease 0s;}
+.copyright a:hover{color:#b8b8b8;}
+
+
 
 /* search */
 .search-container{
