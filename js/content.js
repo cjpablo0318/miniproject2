@@ -264,7 +264,7 @@ getCategories = () => {
     "Unisex",
     "Outwear",
     "Kids",
-    "Swim"];
+    "Swimwear"];
 
   for (let i = 0; i < categoryList.length; i++) {
     let category =
