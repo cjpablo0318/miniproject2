@@ -477,8 +477,6 @@ signUp = () => {
 
   users[users.length] = newUser;
 
-  alert(checkUser(email, pass));
-
   if (checkUser(email, pass) > -1) {
     showError("Email already exist!");
     return;
